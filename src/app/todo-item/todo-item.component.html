@@ -1,0 +1,20 @@
+<div
+  class="todo-item"
+  [ngClass]="{
+    important: item.status === 'important',
+    completed: item.status === 'completed'
+  }"
+>
+  <h3>{{ item.title }}</h3>
+  <p>{{ item.description }}</p>
+  <select [(ngModel)]="item.status" (change)="onStatusChange()">
+    <option value="normal">Обычная</option>
+    <option value="important">Важная</option>
+    <option value="completed">Выполненная</option>
+  </select>
+  <button class="button__red btn btn-danger" (click)="onDelete()">
+    Удалить
+  </button>
+  <p>ID записи: {{ item.id }}</p>
+  <!-- Отладочный вывод -->
+</div>

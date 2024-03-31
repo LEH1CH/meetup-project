@@ -1,0 +1,14 @@
+<div *ngIf="meetup" class="meetup__items">
+    <h2>{{ meetup.name }}</h2>
+    <p>{{ meetup.description }}</p>
+    <p>Время: {{ meetup.time }}</p>
+    <p>Продолжительность: {{ meetup.duration }} минут</p>
+    <p>Место: {{ meetup.location }}</p>
+    <p>Целевая аудитория: {{ meetup.target_audience }}</p>
+    <p>Необходимо знать: {{ meetup.need_to_know }}</p>
+    <p>Что будет: {{ meetup.will_happen }}</p>
+    <p>Причина прихода: {{ meetup.reason_to_come }}</p>
+    <div #modalContainer></div>
+    <button (click)="editMeetup(meetup)">Edit</button>
+  </div>
+  

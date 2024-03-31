@@ -1,0 +1,38 @@
+<div class="todo-search">
+  <div class="form-group">
+    <label for="search">Поиск по названию:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="search"
+      name="search"
+      [(ngModel)]="searchTerm"
+    />
+  </div>
+  <div class="form-group">
+    <label for="status">Фильтр по статусу:</label>
+    <select
+      class="form-control"
+      id="status"
+      name="status"
+      [(ngModel)]="selectedStatus"
+    >
+      <option value="">Все</option>
+      <option value="normal">Обычные</option>
+      <option value="important">Важные</option>
+      <option value="completed">Выполненные</option>
+    </select>
+  </div>
+  <div class="button_filtr">
+    <button type="button" class="btn btn-primary mt-2" (click)="applyFilters()">
+      Поиск
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary mt-2"
+      (click)="resetFilters()"
+    >
+      Сброс
+    </button>
+  </div>
+</div>

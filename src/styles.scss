@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+h1 {
+    text-align: center;
+}
+
+.todo-list-container {
+    height: 400px; /* Примерное количество задач, которое должно поместиться в области просмотра */
+    overflow-y: auto; /* Добавляем вертикальную полосу прокрутки, если контент превышает высоту контейнера */
+  }
+
+.main {
+    max-width: 600px;
+    margin: 40px auto 20px;
+}
+
+.footer { 
+    text-align: center;
+}

@@ -1,0 +1,42 @@
+<div class="meetup__add">
+<form (ngSubmit)="createMeetup()">
+    <h2>Создать новый митап</h2>
+  <div class="form-group">
+    <label for="name">Название:</label>
+    <input type="text" class="form-control" id="name" [(ngModel)]="newMeetup.name" name="name" required>
+  </div>
+  <div class="form-group">
+    <label for="description">Описание:</label>
+    <textarea class="form-control" id="description" [(ngModel)]="newMeetup.description" name="description" required></textarea>
+  </div>
+  <div class="form-group">
+    <label for="time">Дата и время:</label>
+    <input type="datetime-local" class="form-control" id="time" [(ngModel)]="newMeetup.time" name="time" required>
+  </div>
+  <div class="form-group">
+    <label for="duration">Продолжительность (минуты):</label>
+    <input type="number" class="form-control" id="duration" [(ngModel)]="newMeetup.duration" name="duration" required>
+  </div>
+  <div class="form-group">
+    <label for="location">Место:</label>
+    <input type="text" class="form-control" id="location" [(ngModel)]="newMeetup.location" name="location" required>
+  </div>
+  <div class="form-group">
+    <label for="target_audience">Целевая аудитория:</label>
+    <input type="text" class="form-control" id="target_audience" [(ngModel)]="newMeetup.target_audience" name="target_audience" required>
+  </div>
+  <div class="form-group">
+    <label for="need_to_know">Необходимо знать:</label>
+    <textarea class="form-control" id="need_to_know" [(ngModel)]="newMeetup.need_to_know" name="need_to_know" required></textarea>
+  </div>
+  <div class="form-group">
+    <label for="will_happen">Что будет:</label>
+    <textarea class="form-control" id="will_happen" [(ngModel)]="newMeetup.will_happen" name="will_happen" required></textarea>
+  </div>
+  <div class="form-group">
+    <label for="reason_to_come">Причина прихода:</label>
+    <textarea class="form-control" id="reason_to_come" [(ngModel)]="newMeetup.reason_to_come" name="reason_to_come" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Создать митап</button>
+</form>
+</div>
