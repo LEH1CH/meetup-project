@@ -1,0 +1,25 @@
+<form class="filter_form" [formGroup]="filterForm">
+    <mat-form-field class="input" appearance="outline" *ngIf="filterForm.value.criterion !== 'time'">
+        <mat-label>Поиск</mat-label>
+        <input formControlName="search" matInput>
+    </mat-form-field>
+
+    <mat-form-field class="input" appearance="outline" *ngIf="filterForm.value.criterion === 'time'">
+        <mat-label>Выберите дату</mat-label>
+        <input matInput formControlName="search" [matDatepicker]="dp">
+        <mat-hint>{{getDateFormatString()}}</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+      </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+        <mat-label>Критерий</mat-label>
+        <mat-select formControlName="criterion">
+            <mat-option value="name">По названию</mat-option>
+            <mat-option value="description">По описанию</mat-option>
+            <mat-option value="location">По местоположению</mat-option>
+            <mat-option value="time">По дате</mat-option>
+            <mat-option value="owner">По автору</mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

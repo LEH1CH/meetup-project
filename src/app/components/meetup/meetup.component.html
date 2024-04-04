@@ -1,0 +1,41 @@
+<mat-card [ngClass]="{greyBack: isOldMeetup}">
+    <mat-card-content>
+
+        <div>
+            <div class="meetup_header">
+                <span class="meetup_name">{{meetup.name}}</span>
+                <span class="meetup_subscribers">Подписчики: {{meetup.users.length}}</span>
+            </div>
+
+            <div class="meetup_description">{{meetup.description}}</div>
+            <div class="meetup_user">{{meetup.owner.fio}}</div>
+        </div>
+
+        <div>
+            <div class="meetup_time">{{getDate(meetup.time)}}</div>
+            <div class="meetup_location">{{meetup.location}}</div>
+
+            <div *ngIf="!isOldMeetup">
+                <button *ngIf="!isSubscribe" (click)="subscribe()" mat-raised-button color="primary">Я пойду</button>
+                <button *ngIf="isSubscribe" (click)="unsubscribe()" mat-raised-button color="primary">Не смогу
+                    пойти</button>
+            </div>
+
+            <button *ngIf="isCanEdit" (click)="openDialog()" mat-raised-button color="primary">Редактировать</button>
+            <button *ngIf="isCanEdit" (click)="delete()" mat-raised-button color="primary">Удалить</button>
+
+            <button (click)="isOpen = !isOpen" mat-mini-fab color="primary">
+                <mat-icon>{{isOpen ? 'expand_less' : 'expand_more'}}</mat-icon>
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<div *ngIf="isOpen">
+    <div>{{meetup.name}}</div>
+    <div>{{meetup.description}}</div>
+    <div>{{meetup.users.length}}</div>
+    <div>{{meetup.owner.fio}}</div>
+    <div>{{meetup.time}}</div>
+    <div>{{meetup.location}}</div>
+</div>
