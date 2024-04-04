@@ -1,41 +1,51 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  OnDestroy,
+} from '@angular/core';
 import { Meetup } from '../models/meetup.model';
 import { MeetupService } from '../meetup.service';
+import { ModalService } from '../modal.service';
 import { Subscription } from 'rxjs';
 import { MeetupEditComponent } from '../meetup-edit/meetup-edit.component';
-import { ModalService } from '../modal.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-meetup-list',
   templateUrl: './meetup-list.component.html',
-  styleUrls: ['./meetup-list.component.scss']
+  styleUrls: ['./meetup-list.component.scss'],
 })
-export class MeetupListComponent implements OnInit {
+export class MeetupListComponent implements OnInit, OnDestroy {
   meetups: Meetup[] = [];
   private meetupUpdatedSub!: Subscription;
   @ViewChild('modalContainer', { read: ViewContainerRef }) modalContainer!: ViewContainerRef;
 
-  constructor(private meetupService: MeetupService, private modalService: ModalService) {}
+
+  constructor(
+    private meetupService: MeetupService,
+    private dialog: MatDialog // Используем MatDialog для управления модальными окнами
+  ) {}
 
   ngOnInit(): void {
     this.loadMeetupList();
-    // Подписываемся на событие обновления данных
     this.meetupUpdatedSub = this.meetupService.getMeetupUpdatedListener().subscribe(() => {
-      this.loadMeetupList(); // При получении события обновляем список митапов
+      this.loadMeetupList();
     });
   }
 
   ngOnDestroy(): void {
-    this.meetupUpdatedSub.unsubscribe(); // Отписываемся от события при уничтожении компонента
+    this.meetupUpdatedSub.unsubscribe();
   }
 
   loadMeetups(): void {
     this.loadMeetupList();
   }
-// Метод для обновления списка митапов после создания нового митапа
-refreshMeetups(): void {
-  this.loadMeetups();
-}
+
+  refreshMeetups(): void {
+    this.loadMeetups();
+  }
 
   loadMeetupList(): void {
     // Загружаем митапы из JSON файла и добавляем их в список митапов
@@ -51,15 +61,18 @@ refreshMeetups(): void {
 
   // Метод для открытия модального окна редактирования митапа
   editMeetup(meetup: Meetup): void {
-    const modalRef = this.modalService.open(MeetupEditComponent, this.modalContainer);
-    modalRef.componentInstance.meetup = meetup;
-    modalRef.componentInstance.saveChanges.subscribe((updatedMeetup: Meetup) => {
-      // Обновляем митап в списке после сохранения изменений
-      const index = this.meetups.findIndex(m => m.id === updatedMeetup.id);
-      if (index !== -1) {
-        this.meetups[index] = updatedMeetup;
+    const dialogRef = this.dialog.open(MeetupEditComponent, {
+      width: '400px', // Установите ширину модального окна по вашему усмотрению
+      data: { meetup } // Передаем meetup в компонент MeetupEditComponent через data
+    });
+  
+    dialogRef.afterClosed().subscribe((updatedMeetup: Meetup) => {
+      if (updatedMeetup) {
+        const index = this.meetups.findIndex(m => m.name === updatedMeetup.name);
+        if (index !== -1) {
+          this.meetups[index] = updatedMeetup;
+        }
       }
-      modalRef.close(); // Закрываем модальное окно
     });
   }
   

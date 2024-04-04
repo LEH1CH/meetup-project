@@ -1,5 +1,4 @@
 export class Meetup {
-  id!: number; // Добавляем поле id
   name: string;
   description: string;
   time: Date;

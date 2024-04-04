@@ -11,8 +11,7 @@ export class MeetupService {
   private meetupsLoaded: boolean = false;
   private meetups: Meetup[] = [];
   private meetupUpdated = new Subject<void>();
-  private nextId: number = 1; // Начальное значение для генерации id
-  
+
   constructor(private http: HttpClient) {}
 
   getMeetups(): Observable<Meetup[]> {
@@ -21,52 +20,43 @@ export class MeetupService {
 
   loadMeetupsFromJson(): Observable<Meetup[]> {
     if (!this.meetupsLoaded) {
-      // Проверяем, загружены ли митапы
       return this.http.get<Meetup[]>(this.meetupsUrl).pipe(
         tap((meetups) => {
-          this.addMeetupsFromJson(meetups); // Добавляем митапы в список
-          this.meetupsLoaded = true; // Устанавливаем флаг, что митапы уже загружены
+          this.addMeetupsFromJson(meetups);
+          this.meetupsLoaded = true;
         })
       );
     } else {
-      return of(this.meetups); // Используем of для создания Observable
+      return of(this.meetups);
     }
   }
 
-  // Метод для добавления митапов из JSON файла в список митапов
   addMeetupsFromJson(meetups: Meetup[]): void {
-    // Очищаем текущий список митапов перед добавлением новых митапов из JSON файла
     this.meetups = [];
-    // Добавляем митапы из JSON файла в список митапов
     this.meetups.push(...meetups);
     this.meetupsLoaded = true;
   }
 
   addMeetup(meetup: Meetup): void {
-    this.meetups.push(meetup); // Добавляем митап в список
+    this.meetups.push(meetup);
     this.meetupUpdated.next();
-  }
-
-  generateId(): number {
-    return this.nextId++;
   }
 
   createMeetup(newMeetup: Meetup): Meetup {
-    newMeetup.id = this.generateId();
-    this.meetups.push(newMeetup); // Добавляем новый митап в список
+    this.meetups.push(newMeetup);
     this.meetupUpdated.next();
-    return newMeetup; // Возвращаем созданный митап
+    return newMeetup;
   }
 
   getMeetupUpdatedListener(): Observable<void> {
-    return this.meetupUpdated.asObservable(); // Предоставляем доступ к Subject для подписки на обновления
+    return this.meetupUpdated.asObservable();
   }
   
   updateMeetup(meetup: Meetup): void {
-    const index = this.meetups.findIndex(m => m.id === meetup.id);
+    const index = this.meetups.findIndex(m => m.name === meetup.name);
     if (index !== -1) {
         this.meetups[index] = meetup;
     }
-}
-
+  }
+  
 }

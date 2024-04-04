@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { Meetup } from '../models/meetup.model';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-meetup-edit',
@@ -8,12 +8,20 @@ import { Meetup } from '../models/meetup.model';
   styleUrls: ['./meetup-edit.component.scss']
 })
 export class MeetupEditComponent {
-meetup: any;
+  @Input() meetup!: Meetup;
+  @Output() meetupUpdated: EventEmitter<Meetup> = new EventEmitter<Meetup>();
+  
+
   constructor(
     public dialogRef: MatDialogRef<MeetupEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Meetup
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
+
+  onSaveChanges(): void {
+    // Передаем измененный митап обратно в родительский компонент
+    this.meetupUpdated.emit(this.meetup);
+  }
   onCancelClick(): void {
     this.dialogRef.close();
   }

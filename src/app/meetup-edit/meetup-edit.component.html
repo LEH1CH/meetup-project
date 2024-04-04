@@ -1,38 +1,38 @@
 <h2 mat-dialog-title>Edit Meetup</h2>
-<div mat-dialog-content>
+<div mat-dialog-content class="container">
   <h2>Edit Meetup</h2>
   <label for="name">Name:</label>
-  <input [(ngModel)]="meetup.name" name="name" id="name" />
+  <input [(ngModel)]="meetup.name" name="name" id="name" /><br/>
   <label for="description">Description:</label>
-  <input [(ngModel)]="meetup.description" name="description" id="description" />
+  <input [(ngModel)]="meetup.description" name="description" id="description" /><br/>
   <label for="time">Time:</label>
-  <input [(ngModel)]="meetup.time" name="time" id="time" />
+  <input [(ngModel)]="meetup.time" name="time" id="time" /><br/>
   <label for="duration">Duration:</label>
-  <input [(ngModel)]="meetup.duration" name="duration" id="duration" />
+  <input [(ngModel)]="meetup.duration" name="duration" id="duration" /><br/>
   <label for="location">Location:</label>
-  <input [(ngModel)]="meetup.location" name="location" id="location" />
+  <input [(ngModel)]="meetup.location" name="location" id="location" /><br/>
   <label for="target_audience">Target Audience:</label>
   <input
     [(ngModel)]="meetup.target_audience"
     name="target_audience"
     id="target_audience"
-  />
+  /><br/>
   <label for="need_to_know">Need to Know:</label>
   <input
     [(ngModel)]="meetup.need_to_know"
     name="need_to_know"
     id="need_to_know"
-  />
+  /><br/>
   <label for="will_happen">Will Happen:</label>
-  <input [(ngModel)]="meetup.will_happen" name="will_happen" id="will_happen" />
+  <input [(ngModel)]="meetup.will_happen" name="will_happen" id="will_happen" /><br/>
   <label for="reason_to_come">Reason to Come:</label>
   <input
     [(ngModel)]="meetup.reason_to_come"
     name="reason_to_come"
     id="reason_to_come"
-  />
+  /><br/>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCancelClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onSaveChanges()">Save</button>
 </div>
