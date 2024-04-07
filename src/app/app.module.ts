@@ -18,7 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
-
+import {MatTableModule} from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginFormComponent } from './components/forms/login-form/login-form.component';
 import { MeetupComponent } from './components/meetup/meetup.component';
@@ -28,10 +28,15 @@ import { FilterFormComponent } from './components/forms/filter-form/filter-form.
 import { FilterMeetupsPipe } from './pipes/filter-meetups.pipe';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MeetupFormComponent } from './components/forms/meetup-form/meetup-form.component';
-import { UserMeetupsPageComponent } from './pages/user-meetups-page/user-meetups-page.component';
+import { UserTableRowComponent } from './components/user-table-row/user-table-row.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { RegisterFormComponent } from './components/forms/register-form/register-form.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
+
+import { UserFilterMeetupsPipe } from './pipes/user-filter-meetups.pipe';
+import { MyMeetupsPageComponent } from './pages/my-meetups-page/my-meetups-page.component';
+import { UsersPageComponent } from './pages/users-page/users-page.component';
+import { UserFormComponent } from './components/forms/user-form/user-form.component';
 
 
 @NgModule({
@@ -45,10 +50,14 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
     FilterFormComponent,
     FilterMeetupsPipe,
     MeetupFormComponent,
-    UserMeetupsPageComponent,
+    MyMeetupsPageComponent,
     ModalComponent,
     RegisterFormComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    UsersPageComponent,
+    UserFilterMeetupsPipe,
+    UserTableRowComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +73,8 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
     MatIconModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true },

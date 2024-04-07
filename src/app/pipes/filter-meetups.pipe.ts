@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IMeetup } from '../models/meetup';
 import moment from 'moment';
+import { Observable } from 'rxjs';
 
 @Pipe({
   name: 'filterMeetups'

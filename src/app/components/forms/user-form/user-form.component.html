@@ -1,0 +1,44 @@
+<form [formGroup]="userForm" class="row">
+    <div class="form_control">
+        <mat-form-field appearance="outline">
+            <mat-label>Имя</mat-label>
+            <input formControlName="fio" type="text" matInput required="true">
+        </mat-form-field>
+        <div class="error" *ngIf="userForm.controls['fio'].invalid && userForm.controls['fio'].touched">
+            <div *ngIf="userForm.controls['fio'].hasError('required')">Необходимо заполнить поле 'имя'</div>
+            <div *ngIf="userForm.controls['fio'].hasError('minlength')">Минимальная длина 2 символа</div>
+        </div>
+    </div>
+    <div class="form_control">
+        <mat-form-field appearance="outline">
+            <mat-label>Почта</mat-label>
+            <input formControlName="email" type="email" matInput required="true">
+        </mat-form-field>
+        <div class="error" *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched">
+            <div *ngIf="userForm.controls['email'].hasError('required')">Необходимо заполнить поле 'почта'</div>
+            <div *ngIf="userForm.controls['email'].hasError('email')">Пожалуйста, укажите корректный адрес</div>
+        </div>
+    </div>
+    <div class="form_control">
+        <mat-form-field appearance="outline">
+            <mat-label>Новый пароль</mat-label>
+            <input formControlName="password" type="password" matInput required="true">
+        </mat-form-field>
+        <div class="error" *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched">
+            <div *ngIf="userForm.controls['password'].hasError('required')">Необходимо заполнить поле 'пароль'</div>
+            <div *ngIf="userForm.controls['password'].hasError('minlength')">Минимальная длина пароля 4 символа</div>
+        </div>
+    </div>
+    <div class="form_control">
+        <mat-form-field appearance="outline">
+            <mat-label>Добавить роль</mat-label>
+            <mat-select formControlName="roles">
+                <mat-option *ngFor="let role of roleList | async" value={{role.name}}>{{role.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="form_control">
+        <button type="submit" mat-raised-button color="primary" class="btn btn-light">Войти</button>
+    </div>
+</form>

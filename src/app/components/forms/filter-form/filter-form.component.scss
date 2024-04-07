@@ -1,9 +1,17 @@
 .filter_form {
+    margin-top: 50px;
     display: flex;
     align-items: start;
     justify-content: stretch;
     column-gap: 20px;
+    
+    
 }
 .input {
     width: 100%;
+    border-radius: 20px;
+    
 }
+ .label {
+    color: white;
+ }

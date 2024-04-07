@@ -8,23 +8,23 @@
             </div>
 
             <div class="meetup_description">{{meetup.description}}</div>
-            <div class="meetup_user">{{meetup.owner.fio}}</div>
+            <!-- <div class="meetup_user">{{meetup.owner.fio}}</div> -->
         </div>
 
         <div>
             <div class="meetup_time">{{getDate(meetup.time)}}</div>
             <div class="meetup_location">{{meetup.location}}</div>
 
-            <div *ngIf="!isOldMeetup">
-                <button *ngIf="!isSubscribe" (click)="subscribe()" mat-raised-button color="primary">Я пойду</button>
-                <button *ngIf="isSubscribe" (click)="unsubscribe()" mat-raised-button color="primary">Не смогу
+            <div *ngIf="!isOldMeetup && !isUserPage">
+                <button *ngIf="!isSubscribe" (click)="subscribe()" class="btn btn-light">Я пойду</button>
+                <button *ngIf="isSubscribe" (click)="unsubscribe()" class="btn btn-light">Не смогу
                     пойти</button>
             </div>
-
-            <button *ngIf="isCanEdit" (click)="openDialog()" mat-raised-button color="primary">Редактировать</button>
-            <button *ngIf="isCanEdit" (click)="delete()" mat-raised-button color="primary">Удалить</button>
-
-            <button (click)="isOpen = !isOpen" mat-mini-fab color="primary">
+            <div *ngIf="isUserPage">
+            <button *ngIf="isCanEdit" (click)="openDialog()" class="btn btn-light">Редактировать</button>
+            <button *ngIf="isCanEdit" (click)="delete()" class="btn btn-light">Удалить</button>
+            </div>
+            <button (click)="isOpen = !isOpen" class="btn btn-light">
                 <mat-icon>{{isOpen ? 'expand_less' : 'expand_more'}}</mat-icon>
             </button>
         </div>
@@ -35,7 +35,7 @@
     <div>{{meetup.name}}</div>
     <div>{{meetup.description}}</div>
     <div>{{meetup.users.length}}</div>
-    <div>{{meetup.owner.fio}}</div>
+    <!-- <div>{{meetup.owner.fio}}</div> -->
     <div>{{meetup.time}}</div>
     <div>{{meetup.location}}</div>
 </div>

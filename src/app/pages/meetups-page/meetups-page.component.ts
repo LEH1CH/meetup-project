@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IMeetup } from '../../models/meetup';
 import { MeetupService } from '../../services/meetup.service';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-meetups-page',
@@ -9,6 +10,7 @@ import { MeetupService } from '../../services/meetup.service';
 })
 export class MeetupsPageComponent {
 
+  public meetupList$!: Observable<IMeetup[]>;
   public searchFilter!: string;
   public criterionFilter!: 'name' | 'description' | 'location' | 'time' | 'owner';
 
@@ -17,10 +19,7 @@ export class MeetupsPageComponent {
   ) { }
 
   ngOnInit(): void {
-    this.getAll();
-  }
-
-  getAll() {
+    this.meetupList$ = this.meetupService.meetupList;
     this.meetupService.getAll().subscribe((data: IMeetup[] | null) => {
       if (!data) { return }
       this.meetupService.meetupList = data;
@@ -29,21 +28,17 @@ export class MeetupsPageComponent {
   subscribe(value: { idMeetup: number, idUser: number }) {
     this.meetupService.subscribe(value.idMeetup, value.idUser).subscribe((data: IMeetup | null) => {
       if (!data) { return }
+      this.meetupService.updateMeetup = data;
     })
   }
   unsubscribe(value: { idMeetup: number, idUser: number }) {
     this.meetupService.unsubscribe(value.idMeetup, value.idUser).subscribe((data: IMeetup | null) => {
       if (!data) { return }
+      this.meetupService.updateMeetup = data;
     })
   }
   filter(value: { search: string, criterion: 'name' | 'description' | 'location' | 'time' | 'owner' }) {
     this.searchFilter = value.search;
     this.criterionFilter = value.criterion;
-  }
-  delete(id: number) {
-    this.meetupService.delete(id).subscribe((data: IMeetup | null) => {
-      if (!data) { return }
-      console.log(data)
-    })
   }
 }

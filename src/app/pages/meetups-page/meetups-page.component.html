@@ -1,11 +1,12 @@
 <app-filter-form (filterEvent)="filter($event)"></app-filter-form>
 
-<ul class="meetup_list">
-    <app-meetup 
+<ul class="meetup_list" *ngIf="meetupList$ | async as meetupList">
+  <app-meetup
     (subscribeEvent)="subscribe($event)"
     (unsubscribeEvent)="unsubscribe($event)"
-    (deleteEvent)="delete($event)"
-    *ngFor="let item of meetupService.meetupList | filterMeetups: searchFilter : criterionFilter" 
+    *ngFor="
+      let item of meetupList | filterMeetups : searchFilter : criterionFilter
+    "
     [meetup]="item"
-    ></app-meetup>
+  ></app-meetup>
 </ul>

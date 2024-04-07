@@ -1,0 +1,4 @@
+<div class="table" *ngFor="let user of userList$ | async as userList" [user]="user" [roleList]="roleList$"
+    app-user-table-row (updateEvent)="updateUser($event)">
+</div>
+<button (click)="addRole()">helo</button>

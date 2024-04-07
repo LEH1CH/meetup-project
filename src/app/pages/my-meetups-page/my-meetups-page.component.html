@@ -1,10 +1,12 @@
-<app-navbar-meetup></app-navbar-meetup>
-<button mat-raised-button (click)="openDialog()" color="primary">Создать новый митап</button>
+<button (click)="openDialog()" color="primary" class="btn btn-light create__meetup">
+  Создать новый митап
+</button>
 
-<ul class="meetup_list">
+<ul class="meetup_list" *ngIf="meetupService.meetupList | async as meetupList">
     <app-meetup
     (deleteEvent)="delete($event)"
-    *ngFor="let item of meetupService.userMeetupList" 
+    *ngFor="let item of meetupList | userFilterMeetups"
     [meetup]="item"
-    ></app-meetup>
+    [isUserPage]="true"
+  ></app-meetup>
 </ul>

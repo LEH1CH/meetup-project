@@ -1,40 +1,34 @@
+import { AuthService } from './../../services/auth.service';
+import { MeetupService } from './../../services/meetup.service';
 import { Component, OnInit } from '@angular/core';
-import { MeetupService } from '../../services/meetup.service';
-import { AuthService } from '../../services/auth.service';
+import { IMeetup } from '../../models/meetup';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { IMeetup } from '../../models/meetup.model';
 import { ModalComponent } from '../../components/modal/modal.component';
-
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-my-meetups-page',
   templateUrl: './my-meetups-page.component.html',
-  styleUrls: ['./my-meetups-page.component.scss']
+  styleUrl: './my-meetups-page.component.scss'
 })
 export class MyMeetupsPageComponent implements OnInit {
 
+  public meetupList$!: Observable<IMeetup[]>;
+
   constructor(
     public meetupService: MeetupService,
-    private authService: AuthService,
+    public authService: AuthService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.getAll();
-  }
-
-  getAll() {
+    this.meetupList$ = this.meetupService.meetupList;
     this.meetupService.getAll().subscribe((data: IMeetup[] | null) => {
       if (!data) { return }
-
-      this.meetupService.userMeetupList = data.filter(
-        item => item.owner.id === this.authService.user?.id);
-    })
-  }
-  delete(id: number) {
-    this.meetupService.delete(id).subscribe((data: IMeetup | null) => {
-      if (!data) { return }
-      console.log(data)
+      if (this.authService.user) {
+        this.meetupService.meetupList = data;
+      }
     })
   }
   openDialog(): void {
@@ -42,5 +36,11 @@ export class MyMeetupsPageComponent implements OnInit {
       data: { isCreate: true },
       width: '800px'
     });
+  }
+  delete(id: number) {
+    this.meetupService.delete(id).subscribe((data: IMeetup | null) => {
+      if (!data) { return }
+      this.meetupService.removeMeetup = data;
+    })
   }
 }

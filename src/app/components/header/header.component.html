@@ -1,38 +1,54 @@
 <section class="header">
-    <div class="header_fixed header">
-        <div class="header_fixed_container">
+  <div class="header_fixed header">
+    <div class="header_fixed_container">
+      <nav class="nav">
+        <img src="../../../assets/logo.svg" class="logo" />
+        <ul class="nav_list">
+          <li *ngIf="authService.user" class="nav_item">
+            <button
+              routerLink="meetups"
+              routerLinkActive="active-link"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="btn btn-light"
+            >
+              Все митапы
+            </button>
+          </li>
+          <li *ngIf="authService.user" class="nav_item">
+            <button
+              routerLink="userMeetups"
+              routerLinkActive="active-link"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="btn btn-light"
+            >
+              Мои митапы
+            </button>
+          </li>
+          <li *ngIf="authService.user" class="nav_item">
+            <button
+              routerLink="users"
+              routerLinkActive="active-link"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="btn btn-light"
+            >
+              Пользователи
+            </button>
+          </li>
+        </ul>
+      </nav>
 
-            <nav class="nav">
-                <img src="../../../assets/logo.svg" class="logo">
-                <ul class="nav_list">
-                    <li *ngIf="authService.user" class="nav_item">
-                        <button routerLink="meetups" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" class="btn btn-light">
-                            Все митапы</button>
-                    </li>
-                    <li *ngIf="authService.user" class="nav_item">
-                        <button routerLink="userMeetups" routerLinkActive="active-link"
-                            [routerLinkActiveOptions]="{exact: true}" class="btn btn-light">Мои митапы</button>
-                    </li>
-                </ul>
-            </nav>
+      <div *ngIf="authService.user; else isNotAuth">
+        <button (click)="logout()" class="btn btn-light">Выйти</button>
+      </div>
 
-            <div *ngIf="authService.user; else isNotAuth">
-                <button (click)="logout()" class="btn btn-light">
-                    Выйти
-                </button>
-            </div>
-
-            <ng-template #isNotAuth>
-                <div class="btns">
-                    <button class="btn btn-light" routerLink="registration">
-                        Регистрация
-                    </button>
-                    <button class="btn btn-light" routerLink="login">
-                        Войти
-                    </button>
-                </div>
-            </ng-template>
-
+      <ng-template #isNotAuth>
+        <div class="btns">
+          <button class="btn btn-light" routerLink="registration">
+            Регистрация
+          </button>
+          <button class="btn btn-light" routerLink="login">Войти</button>
         </div>
+      </ng-template>
     </div>
+  </div>
 </section>

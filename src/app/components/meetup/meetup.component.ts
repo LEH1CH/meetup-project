@@ -25,7 +25,7 @@ export class MeetupComponent implements OnInit {
   ngOnInit(): void {
     this.checkDateMeetup();
 
-    if (this.meetup.owner.id === this.authService.user?.id) {
+    if (this.meetup.createdBy === this.authService.user?.id) {
       this.isCanEdit = true;
     } else {
       this.isCanEdit = false;
@@ -36,7 +36,7 @@ export class MeetupComponent implements OnInit {
   isOldMeetup: boolean = false;
   isCanEdit: boolean = false;
 
-
+  @Input() isUserPage: boolean = false;
   @Input() meetup!: IMeetup
 
   @Output() subscribeEvent = new EventEmitter();
