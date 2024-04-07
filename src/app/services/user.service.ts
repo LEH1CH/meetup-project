@@ -6,18 +6,15 @@ import { HttpClient } from '@angular/common/http';
 import { IRole } from '../models/role';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
   baseURL: string = `${environment.backendOrigin}/user`;
 
   private dataSubject = new BehaviorSubject<IUser[]>([]);
   private _userList$: Observable<IUser[]> = this.dataSubject.asObservable();
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   set userList(value: IUser[]) {
     this.dataSubject.next(value);
@@ -27,45 +24,42 @@ export class UserService {
   }
 
   getAll(): Observable<IUser[] | null> {
-    return this.http
-      .get<IUser[]>(`${this.baseURL}`)
-      .pipe(catchError((err): Observable<null> => {
-          alert(err.error.message);
-          return of(null);
-        })
-      )
-  }
-  update(user: IUser): Observable<IUser | null> {
-    console.log(user)
-    return this.http
-      .put<IUser>(`${this.baseURL}/${user.id}`,{
-        emai: user.email,
-        password: user.password,
-        fio: user.fio
-      })
-      .pipe(catchError((err): Observable<null> => {
-          alert(err.error.message);
-          return of(null);
-        })
-      )
-  }
-  add(): Observable<IRole | null> {
-    return this.http
-      .put<IRole>(`${this.baseURL}/role`, { name: 'ADMIN', userId: 451 })
-      .pipe(catchError((err): Observable<null> => {
+    return this.http.get<IUser[]>(`${this.baseURL}`).pipe(
+      catchError((err): Observable<null> => {
         alert(err.error.message);
         return of(null);
       })
-      )
+    );
   }
-  // add(name: string, userId: number): Observable<IRole | null> {
-  //   return this.http
-  //     .put<IRole>(`${this.baseURL}`, { name: 'ADMIN', userId: 451 })
-  //     .pipe(catchError((err): Observable<null> => {
-  //       alert(err.error.message);
-  //       return of(null);
-  //     })
-  //     )
-  // }
-
+  update(
+    id: number,
+    email: string,
+    fio: string,
+    password: string
+  ): Observable<IUser | null> {
+    return this.http
+      .put<IUser>(`${this.baseURL}/${id}`, { email, password, fio })
+      .pipe(
+        catchError((err): Observable<null> => {
+          alert(err.error.message);
+          return of(null);
+        })
+      );
+  }
+  delete(id: number): Observable<IUser | null> {
+    return this.http.delete<IUser>(`${this.baseURL}/${id}`).pipe(
+      catchError((err): Observable<null> => {
+        alert(err.error.message);
+        return of(null);
+      })
+    );
+  }
+  addRole(name: string, userId: number): Observable<IRole | null> {
+    return this.http.put<IRole>(`${this.baseURL}/role`, { name, userId }).pipe(
+      catchError((err): Observable<null> => {
+        alert(err.error.message);
+        return of(null);
+      })
+    );
+  }
 }

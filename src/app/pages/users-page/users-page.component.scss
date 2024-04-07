@@ -1,5 +1,12 @@
 .table {
-    margin-top: 50px;
     width: 100%;
-    border: 1px black solid;
+    border-radius: 10px;
+    color: black;
+    background-color: white;
+}
+
+.button__container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
 }

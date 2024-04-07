@@ -1,5 +1,17 @@
 .row {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    margin-top: 50px;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.form_control {
+    border-radius: 10px;
+}
+
+.button__container-user {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
 }

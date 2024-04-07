@@ -1,4 +1,14 @@
-<div class="table" *ngFor="let user of userList$ | async as userList" [user]="user" [roleList]="roleList$"
-    app-user-table-row (updateEvent)="updateUser($event)">
+<div class="button__container">
+  <button (click)="isEdit = !isEdit" class="btn btn-light">
+    {{ isEdit ? "Закрыть" : "Добавить пользователя" }}
+  </button>
 </div>
-<button (click)="addRole()">helo</button>
+<div
+  class="table"
+  *ngFor="let user of userList$ | async as userList"
+  [user]="user"
+  [roleList]="roleList$"
+  app-user-table-row
+  (updateEvent)="update($event)"
+  (deleteEvent)="deleteUser($event)"
+></div>

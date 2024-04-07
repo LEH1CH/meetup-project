@@ -7,17 +7,22 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { MyMeetupsPageComponent } from './pages/my-meetups-page/my-meetups-page.component';
 
-
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent, title: 'Вход' },
-  { path: 'registration', component: RegisterPageComponent, title: 'Регистрация' },
+  {
+    path: 'registration',
+    component: RegisterPageComponent,
+    title: 'Регистрация',
+  },
   { path: 'meetups', component: MeetupsPageComponent, title: 'All Meetups' },
   {
     path: 'userMeetups',
     component: MyMeetupsPageComponent,
     title: 'My Meetups',
   },
-  { path: 'users', component: UsersPageComponent, title: 'Users' }
+  { path: 'users', component: UsersPageComponent, title: 'Users' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' },
 ];
 
 @NgModule({

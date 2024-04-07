@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IRole } from '../../models/role';
 import { IUser } from '../../models/user';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: '[app-user-table-row]',
@@ -17,8 +16,15 @@ export class UserTableRowComponent {
   isEdit = false;
 
   @Output() updateEvent = new EventEmitter();
+  @Output() deleteEvent = new EventEmitter();
 
-  update(value: any) {
+  update(value: IUser) {
     this.updateEvent.emit(value)
+  }
+  delete() {
+    this.deleteEvent.emit(this.user.id)
+  }
+  closeForm() {
+    this.isEdit = false;
   }
 }

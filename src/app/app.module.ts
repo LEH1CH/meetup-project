@@ -18,7 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginFormComponent } from './components/forms/login-form/login-form.component';
 import { MeetupComponent } from './components/meetup/meetup.component';
@@ -38,7 +38,6 @@ import { MyMeetupsPageComponent } from './pages/my-meetups-page/my-meetups-page.
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { UserFormComponent } from './components/forms/user-form/user-form.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +56,7 @@ import { UserFormComponent } from './components/forms/user-form/user-form.compon
     UsersPageComponent,
     UserFilterMeetupsPipe,
     UserTableRowComponent,
-    UserFormComponent
+    UserFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,14 +73,14 @@ import { UserFormComponent } from './components/forms/user-form/user-form.compon
     MatSelectModule,
     MatDatepickerModule,
     MatDialogModule,
-    MatTableModule
+    MatTableModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'ru_RU' },
     provideMomentDateAdapter(),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

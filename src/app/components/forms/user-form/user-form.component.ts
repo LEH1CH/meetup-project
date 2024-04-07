@@ -21,8 +21,8 @@ export class UserFormComponent {
     this.userForm = new FormGroup({
       fio: new FormControl<string>(this.user.fio || '', [Validators.required, Validators.minLength(2)]),
       email: new FormControl<string>(this.user?.email || '', [Validators.required, Validators.email]),
-      password: new FormControl<string>('', [Validators.required, Validators.minLength(4)]),
-      roles: new FormControl<string>('')
+      password: new FormControl<string>('', [Validators.minLength(4)]),
+      role: new FormControl<string>('USER')
     });
   }
 
@@ -30,17 +30,35 @@ export class UserFormComponent {
   @Input() user!: IUser;
 
   @Output() updateEvent = new EventEmitter();
+  @Output() closeFormEvent = new EventEmitter();
+
+  check(roleName: string) {
+    return this.user.roles?.some(role => role.name === roleName);
+  }
+  closeForm() {
+    this.closeFormEvent.emit(false)
+  }
 
   onSubmit() {
-    console.log(this.user.id)
-    console.log(this.userForm.value.password)
-    console.log(this.userForm.value.email)
-    console.log(this.userForm.value.fio)
-    console.log(this.userForm.value.roles)
-    // if (this.userForm.value.password === '****') {
-    //   this.updateEvent.emit({ id: this.user.id, fio: this.fio, email: this.email })
-    // } else {
-    //   this.updateEvent.emit({ id: this.user.id, fio: this.fio, email: this.email, password: this.password })
-    // }
+    if (this.userForm.value.password === '') {
+       this.updateEvent.emit({
+         id: this.user.id,
+         fio: this.userForm.value.fio,
+         email: this.userForm.value.email,
+         role: this.userForm.value.role
+       })
+      this.closeForm()
+    } else if (this.userForm.value.password.length < 4) {
+      return
+    } else if (this.userForm.value.password.length >= 4) {
+       this.updateEvent.emit({
+         id: this.user.id,
+         fio: this.userForm.value.fio,
+         email: this.userForm.value.email,
+         password: this.userForm.value.password,
+         role: this.userForm.value.role
+       });
+      this.closeForm()
+    }
   }
 }

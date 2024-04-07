@@ -1,6 +1,8 @@
-<button (click)="openDialog()" color="primary" class="btn btn-light create__meetup">
+<div class="button__container">
+<button (click)="openDialog()" class="btn btn-light">
   Создать новый митап
 </button>
+</div>
 
 <ul class="meetup_list" *ngIf="meetupService.meetupList | async as meetupList">
     <app-meetup

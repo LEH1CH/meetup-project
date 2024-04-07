@@ -5,18 +5,15 @@ import { IRole } from '../models/role';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RoleService {
-
   baseURL: string = `${environment.backendOrigin}/role`;
 
   private dataSubject = new BehaviorSubject<IRole[]>([]);
   private _roleList$: Observable<IRole[]> = this.dataSubject.asObservable();
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   set roleList(value: IRole[]) {
     this.dataSubject.next(value);
@@ -26,12 +23,11 @@ export class RoleService {
   }
 
   getAll(): Observable<IRole[] | null> {
-    return this.http
-      .get<IRole[]>(`${this.baseURL}`)
-      .pipe(catchError((err): Observable<null> => {
+    return this.http.get<IRole[]>(`${this.baseURL}`).pipe(
+      catchError((err): Observable<null> => {
         alert(err.error.message);
         return of(null);
       })
-      )
+    );
   }
 }

@@ -1,17 +1,21 @@
 .filter_form {
-    margin-top: 50px;
     display: flex;
     align-items: start;
     justify-content: stretch;
     column-gap: 20px;
-    
-    
 }
-.input {
-    width: 100%;
-    border-radius: 20px;
-    
-}
- .label {
-    color: white;
+
+
+ .filter {
+    color: black;
  }
+
+ .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }

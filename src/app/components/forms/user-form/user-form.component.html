@@ -1,4 +1,4 @@
-<form [formGroup]="userForm" class="row">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="row">
     <div class="form_control">
         <mat-form-field appearance="outline">
             <mat-label>Имя</mat-label>
@@ -15,30 +15,32 @@
             <input formControlName="email" type="email" matInput required="true">
         </mat-form-field>
         <div class="error" *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched">
-            <div *ngIf="userForm.controls['email'].hasError('required')">Необходимо заполнить поле 'почта'</div>
+            <div *ngIf="userForm.controls['email'].hasError('required')">Введите почту</div>
             <div *ngIf="userForm.controls['email'].hasError('email')">Пожалуйста, укажите корректный адрес</div>
         </div>
     </div>
     <div class="form_control">
         <mat-form-field appearance="outline">
             <mat-label>Новый пароль</mat-label>
-            <input formControlName="password" type="password" matInput required="true">
+            <input formControlName="password" type="password" matInput>
         </mat-form-field>
         <div class="error" *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched">
-            <div *ngIf="userForm.controls['password'].hasError('required')">Необходимо заполнить поле 'пароль'</div>
+            <div *ngIf="userForm.controls['password'].hasError('required')">Введите пароль</div>
             <div *ngIf="userForm.controls['password'].hasError('minlength')">Минимальная длина пароля 4 символа</div>
         </div>
     </div>
     <div class="form_control">
         <mat-form-field appearance="outline">
             <mat-label>Добавить роль</mat-label>
-            <mat-select formControlName="roles">
-                <mat-option *ngFor="let role of roleList | async" value={{role.name}}>{{role.name}}</mat-option>
+            <mat-select formControlName="role">
+                <mat-option *ngFor="let role of roleList | async" value="{{role.name}}"
+                    disabled="{{check(role.name)}}">{{role.name}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
 
-    <div class="form_control">
-        <button type="submit" mat-raised-button color="primary" class="btn btn-light">Войти</button>
+    <div class="form_control button__container-user">
+        <button type="submit" class="btn btn-dark">Сохранить</button>
+        <button (click)="closeForm()"  class="btn btn-dark">Отменить</button>
     </div>
 </form>

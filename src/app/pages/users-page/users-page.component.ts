@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IUser } from '../../models/user';
-import { UserService } from '../../services/user.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IRole } from '../../models/role';
+import { IUser } from '../../models/user';
 import { RoleService } from '../../services/role.service';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -12,7 +12,8 @@ import { RoleService } from '../../services/role.service';
   styleUrl: './users-page.component.scss'
 })
 export class UsersPageComponent {
-  tableTitles: string[] = ['Имя', 'Почта', 'Пароль', 'Роли', 'Действия']
+  tableTitles: string[] = ['Имя', 'Почта', 'Пароль', 'Роли', 'Действия'];
+  public isEdit: boolean = false;
   public userList$!: Observable<IUser[]>;
   public roleList$!: Observable<IRole[]>;
 
@@ -39,22 +40,23 @@ export class UsersPageComponent {
       this.roleService.roleList = data;
     });
   }
-  updateUser(value: { id: number, fio: string, email: string, password: string }) {
-    this.userService.update(value).subscribe((data: IUser | null) => {
+  update(value: { id: number, fio: string, email: string, password: string, role: string }) {
+    this.updateUser(value.id, value.email, value.fio, value.password);
+    this.addRole(value.role, value.id);
+  }
+  updateUser(id: number, email: string, fio: string, password: string) {
+    this.userService.update(id, email, fio, password).subscribe();
+  }
+  addRole(name: string, userId: number) {
+    this.userService.addRole(name, userId).subscribe((data: IRole | null) => {
       if (!data) { return }
-      console.log(data)
+      this.getUsers();
     });
   }
-  addRole() {
-    this.userService.add().subscribe((data: IRole | null) => {
+  deleteUser(id: number) {
+    this.userService.delete(id).subscribe((data: IUser | null) => {
       if (!data) { return }
-      console.log(data)
+      this.getUsers();
     });
   }
-  // addRole(value: {name: string, userId: number}) {
-  //   this.roleService.add(value.name, value.userId).subscribe((data: IRole | null) => {
-  //     if (!data) { return }
-  //     console.log(data)
-  //   });
-  // }
 }

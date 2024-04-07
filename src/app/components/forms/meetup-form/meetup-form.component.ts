@@ -88,7 +88,7 @@ export class MeetupFormComponent implements OnInit {
     this.meetupForm.value.time = moment(this.meetupForm.value.time);
     this.meetupForm.value.time.hour(timeArr[0]).minute(timeArr[1]);
 
-    this.meetupEvent.emit({ form: this.meetupForm });
+    this.meetupEvent.emit(this.meetupForm);
   }
 
   getTime(): string | null {

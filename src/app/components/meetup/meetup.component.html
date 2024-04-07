@@ -1,41 +1,66 @@
-<mat-card [ngClass]="{greyBack: isOldMeetup}">
-    <mat-card-content>
-
-        <div>
-            <div class="meetup_header">
-                <span class="meetup_name">{{meetup.name}}</span>
-                <span class="meetup_subscribers">Подписчики: {{meetup.users.length}}</span>
-            </div>
-
-            <div class="meetup_description">{{meetup.description}}</div>
-            <!-- <div class="meetup_user">{{meetup.owner.fio}}</div> -->
+<section class="meetup">
+  <div class="meetup__content">
+    <div class="header">
+      <div>
+        <div class="meetup_header">
+          <span class="meetup_name">{{ meetup.name }}</span>
+          <span class="meetup_subscribers"
+            ><mat-icon>accessibility_new</mat-icon>:
+            {{ meetup.users.length }}</span
+          >
         </div>
 
-        <div>
-            <div class="meetup_time">{{getDate(meetup.time)}}</div>
-            <div class="meetup_location">{{meetup.location}}</div>
-
-            <div *ngIf="!isOldMeetup && !isUserPage">
-                <button *ngIf="!isSubscribe" (click)="subscribe()" class="btn btn-light">Я пойду</button>
-                <button *ngIf="isSubscribe" (click)="unsubscribe()" class="btn btn-light">Не смогу
-                    пойти</button>
-            </div>
-            <div *ngIf="isUserPage">
-            <button *ngIf="isCanEdit" (click)="openDialog()" class="btn btn-light">Редактировать</button>
-            <button *ngIf="isCanEdit" (click)="delete()" class="btn btn-light">Удалить</button>
-            </div>
-            <button (click)="isOpen = !isOpen" class="btn btn-light">
-                <mat-icon>{{isOpen ? 'expand_less' : 'expand_more'}}</mat-icon>
-            </button>
+        <div class="meetup__description">{{ meetup.description }}</div>
+      </div>
+      <!-- <div class="meetup_user">{{ meetup.owner.fio }}</div> -->
+    </div>
+    <div>
+      <div class="container__date">
+        <div class="meetup_time">{{ getDate(meetup.time) }}</div>
+        <div class="meetup_location">{{ meetup.location }}</div>
+      </div>
+      <div class="button__container">
+        <div *ngIf="!isOldMeetup && !isUserPage">
+          <button
+            *ngIf="!isSubscribe"
+            (click)="subscribe()"
+            class="btn btn-dark"
+          >
+            Я пойду
+          </button>
+          <button
+            *ngIf="isSubscribe"
+            (click)="unsubscribe()"
+            class="btn btn-dark"
+          >
+            Не смогу пойти
+          </button>
         </div>
-    </mat-card-content>
-</mat-card>
 
-<div *ngIf="isOpen">
-    <div>{{meetup.name}}</div>
-    <div>{{meetup.description}}</div>
-    <div>{{meetup.users.length}}</div>
-    <!-- <div>{{meetup.owner.fio}}</div> -->
-    <div>{{meetup.time}}</div>
-    <div>{{meetup.location}}</div>
+        <div *ngIf="isUserPage">
+          <button *ngIf="isCanEdit" (click)="openDialog()" class="btn btn-dark">
+            Редактировать
+          </button>
+        </div>
+        <div *ngIf="isUserPage">
+          <button *ngIf="isCanEdit" (click)="delete()" class="btn btn-dark">
+            Удалить
+          </button>
+        </div>
+
+        <button (click)="isOpen = !isOpen" class="btn btn-dark">Ещё</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div *ngIf="isOpen" class="meetup__modal">
+  <div class="meetup__content-modal">
+    <div>Название: {{ meetup.name }}</div>
+    <div>Описание: {{ meetup.description }}</div>
+    <div>Участники: {{ meetup.users.length }}</div>
+    <!-- <div>Организатор: {{ meetup.owner.fio }}</div> -->
+    <div>Время: {{ meetup.time }}</div>
+    <div>Место: {{ meetup.location }}</div>
+  </div>
 </div>

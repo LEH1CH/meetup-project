@@ -1,11 +1,23 @@
-<div class="row">
-    <div *ngIf="!isEdit">{{user.fio}}</div>
-    <div *ngIf="!isEdit">{{user.email}}</div>
-    <div *ngIf="!isEdit">***********</div>
-    <div *ngIf="!isEdit">
-        <div *ngFor="let role of user.roles">{{role.name}}</div>
-    </div>
-    <button (click)="isEdit = !isEdit" mat-raised-button color="primary">{{isEdit ? 'отм' :
-        'ред'}}</button>
+<div *ngIf="!isEdit" class="row">
+  <div>{{ user.fio }}</div>
+  <div>{{ user.email }}</div>
+  <div>***********</div>
+  <div>
+    <div *ngFor="let role of user.roles">{{ role.name }}</div>
+  </div>
+  
+  <div class="button__container-user">
+    <button (click)="isEdit = !isEdit" class="btn btn-dark">
+      Редактировать
+    </button>
+    <button (click)="delete()" class="btn btn-dark">Удалить</button>
+  </div>
 </div>
-<app-user-form *ngIf="isEdit" (updateEvent)="update($event)" [roleList]="roleList" [user]="user" class="btn btn-light"></app-user-form>
+
+<app-user-form
+  *ngIf="isEdit"
+  (updateEvent)="update($event)"
+  (closeFormEvent)="closeForm()"
+  [roleList]="roleList"
+  [user]="user"
+></app-user-form>

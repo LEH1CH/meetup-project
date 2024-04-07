@@ -1,27 +1,19 @@
-import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { IMeetup } from '../models/meetup';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
-import { FormGroup } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MeetupService {
-
   baseURL: string = `${environment.backendOrigin}/meetup`;
 
   private dataSubject = new BehaviorSubject<IMeetup[]>([]);
   private _meetupList$: Observable<IMeetup[]> = this.dataSubject.asObservable();
 
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService,
-    private router: Router,
-  ) { }
+  constructor(private http: HttpClient) {}
 
   get meetupList(): Observable<IMeetup[]> {
     return this._meetupList$;
@@ -31,12 +23,14 @@ export class MeetupService {
   }
   set updateMeetup(value: IMeetup) {
     this.dataSubject.next([
-      ...this.dataSubject.value.map((meetup) => meetup.id === value.id ? value : meetup)
+      ...this.dataSubject.value.map((meetup) =>
+        meetup.id === value.id ? value : meetup
+      ),
     ]);
   }
   set removeMeetup(value: IMeetup) {
     this.dataSubject.next([
-      ...this.dataSubject.value.filter((meetup) => meetup.id !== value.id)
+      ...this.dataSubject.value.filter((meetup) => meetup.id !== value.id),
     ]);
   }
   set meetupList(value: IMeetup[]) {
@@ -59,25 +53,21 @@ export class MeetupService {
   // }
 
   getAll(): Observable<IMeetup[] | null> {
-    return this.http
-      .get<IMeetup[]>(`${this.baseURL}`)
-      .pipe(
-        catchError((err): Observable<null> => {
-          alert(err.error.message);
-          return of(null);
-        })
-      )
+    return this.http.get<IMeetup[]>(`${this.baseURL}`).pipe(
+      catchError((err): Observable<null> => {
+        alert(err.error.message);
+        return of(null);
+      })
+    );
   }
 
   subscribe(idMeetup: number, idUser: number): Observable<IMeetup | null> {
-    return this.http
-      .put<IMeetup>(`${this.baseURL}`, { idMeetup, idUser })
-      .pipe(
-        catchError((err): Observable<null> => {
-          alert(err.error.message);
-          return of(null);
-        })
-      )
+    return this.http.put<IMeetup>(`${this.baseURL}`, { idMeetup, idUser }).pipe(
+      catchError((err): Observable<null> => {
+        alert(err.error.message);
+        return of(null);
+      })
+    );
   }
 
   unsubscribe(idMeetup: number, idUser: number): Observable<IMeetup | null> {
@@ -92,8 +82,7 @@ export class MeetupService {
   }
   create(form: IMeetup): Observable<IMeetup | null> {
     return this.http
-      .post<IMeetup>(`${this.baseURL}`, 
-      {
+      .post<IMeetup>(`${this.baseURL}`, {
         name: form.name,
         description: form.description,
         time: form.time,
@@ -102,52 +91,49 @@ export class MeetupService {
         target_audience: form.target_audience,
         need_to_know: form.need_to_know,
         will_happen: form.will_happen,
-        reason_to_come: form.reason_to_come
+        reason_to_come: form.reason_to_come,
       })
       .pipe(
-        map(item => {
+        map((item) => {
           item.users = [];
-          return item
+          return item;
         }),
         catchError((err): Observable<null> => {
           alert(err.error.message);
           return of(null);
         })
-      )
+      );
   }
   edit(form: IMeetup, meetup: IMeetup): Observable<IMeetup | null> {
     return this.http
-      .put<IMeetup>(`${this.baseURL}/${meetup.id}`,
-        {
-          name: form.name,
-          description: form.description,
-          time: form.time,
-          duration: form.duration,
-          location: form.location,
-          target_audience: form.target_audience,
-          need_to_know: form.need_to_know,
-          will_happen: form.will_happen,
-          reason_to_come: form.reason_to_come,
-        })
+      .put<IMeetup>(`${this.baseURL}/${meetup?.id}`, {
+        name: form.name,
+        description: form.description,
+        time: form.time,
+        duration: form.duration,
+        location: form.location,
+        target_audience: form.target_audience,
+        need_to_know: form.need_to_know,
+        will_happen: form.will_happen,
+        reason_to_come: form.reason_to_come,
+      })
       .pipe(
-        map(item => {
-          item.owner = meetup.owner;
-          return item
+        map((item) => {
+          item.owner = meetup!.owner;
+          return item;
         }),
         catchError((err): Observable<null> => {
           alert(err.error.message);
           return of(null);
         })
-      )
+      );
   }
   delete(id: number): Observable<IMeetup | null> {
-    return this.http
-      .delete<IMeetup>(`${this.baseURL}/${id}`)
-      .pipe(
-        catchError((err): Observable<null> => {
-          alert(err.error.message);
-          return of(null);
-        })
-      )
+    return this.http.delete<IMeetup>(`${this.baseURL}/${id}`).pipe(
+      catchError((err): Observable<null> => {
+        alert(err.error.message);
+        return of(null);
+      })
+    );
   }
 }

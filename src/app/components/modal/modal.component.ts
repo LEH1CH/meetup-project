@@ -21,19 +21,19 @@ export class ModalComponent {
     this.dialogRef.close();
   }
 
-  createEditMeetup(value: {form: FormGroup, meetup: IMeetup}) {
+  createEditMeetup(form: FormGroup) {
 
     if (this.data.isCreate) {
-      this.meetupService.create(value.form.value).subscribe((data: IMeetup | null) => {
+      this.meetupService.create(form.value).subscribe((data: IMeetup | null) => {
         if (!data) { return }
         this.meetupService.createMeetup = data;
-        value.form.reset();
+        form.reset();
       })
     } else {
-      this.meetupService.edit(value.form.value, value.meetup).subscribe((data: IMeetup | null) => {
+      this.meetupService.edit(form.value, this.data.meetup!).subscribe((data: IMeetup | null) => {
         if (!data) { return }
         this.meetupService.updateMeetup = data;
-        value.form.reset();
+        form.reset();
       })
     }
     this.dialogRef.close();
