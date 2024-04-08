@@ -11,7 +11,7 @@
   *ngIf="isEdit"
 ></app-user-form>
 <div class="clearfix">
-<mat-spinner *ngIf="spinnerService.loading$ | async"></mat-spinner>
+  <mat-spinner *ngIf="spinnerService.loading$ | async"></mat-spinner>
 </div>
 <div
   class="table"
@@ -26,5 +26,9 @@
   (deleteEvent)="deleteUser($event)"
 ></div>
 <div class="clearfix">
-  <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+  <pagination-controls
+    (pageChange)="currentPage = $event"
+    previousLabel="Назад"
+    nextLabel="Вперед"
+  ></pagination-controls>
 </div>
