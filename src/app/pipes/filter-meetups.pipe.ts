@@ -1,16 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IMeetup } from '../models/meetup';
 import moment from 'moment';
+import { MeetupService } from '../services/meetup.service';
 
 @Pipe({
   name: 'filterMeetups',
 })
 export class FilterMeetupsPipe implements PipeTransform {
+  constructor(private meetupService: MeetupService) {}
+
   transform(
     meetups: IMeetup[],
     search: string,
     criterion: 'name' | 'description' | 'location' | 'time' | 'owner'
-  ): IMeetup[] | null {
+  ): IMeetup[] | null | any {
     let meetupList: IMeetup[] = meetups;
 
     if (!meetupList) {
@@ -45,6 +48,7 @@ export class FilterMeetupsPipe implements PipeTransform {
       default:
         break;
     }
+    this.meetupService.currentPage = 1;
     return meetupList;
   }
 }

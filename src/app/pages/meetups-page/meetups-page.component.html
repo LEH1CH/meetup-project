@@ -1,12 +1,22 @@
 <app-filter-form (filterEvent)="filter($event)"></app-filter-form>
-
+<div class="clearfix">
+  <mat-spinner *ngIf="spinnerService.loading$ | async"></mat-spinner>
+</div>
 <ul class="meetup_list" *ngIf="meetupList$ | async as meetupList">
   <app-meetup
     (subscribeEvent)="subscribe($event)"
     (unsubscribeEvent)="unsubscribe($event)"
     *ngFor="
-      let item of meetupList | filterMeetups : searchFilter : criterionFilter
+      let item of meetupList
+        | filterMeetups : searchFilter : criterionFilter
+        | paginate
+          : { itemsPerPage: 10, currentPage: meetupService.currentPage }
     "
     [meetup]="item"
   ></app-meetup>
 </ul>
+<div class="clearfix">
+  <pagination-controls
+    (pageChange)="meetupService.currentPage = $event"
+  ></pagination-controls>
+</div>

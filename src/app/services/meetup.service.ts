@@ -12,6 +12,7 @@ export class MeetupService {
 
   private dataSubject = new BehaviorSubject<IMeetup[]>([]);
   private _meetupList$: Observable<IMeetup[]> = this.dataSubject.asObservable();
+  public currentPage = 1;
 
   constructor(private http: HttpClient) {}
 
@@ -37,23 +38,13 @@ export class MeetupService {
     this.dataSubject.next(value);
   }
 
-  // handleError(error: any) {
-  //   let errorMessage = '';
-  //   if (error.error instanceof ErrorEvent) {
-  //     // Get client-side error
-  //     errorMessage = error.error.message;
-  //   } else {
-  //     // Get server-side error
-  //     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-  //   }
-  //   window.alert(errorMessage);
-  //   return throwError(() => {
-  //     return errorMessage;
-  //   });
-  // }
-
   getAll(): Observable<IMeetup[] | null> {
     return this.http.get<IMeetup[]>(`${this.baseURL}`).pipe(
+      map((data) => {
+        return data.sort((a: IMeetup, b: IMeetup) =>
+          new Date(b.time) > new Date(a.time) ? 1 : -1
+        );
+      }),
       catchError((err): Observable<null> => {
         alert(err.error.message);
         return of(null);

@@ -10,10 +10,14 @@
   [isCreate]="true"
   *ngIf="isEdit"
 ></app-user-form>
-
+<div class="clearfix">
+<mat-spinner *ngIf="spinnerService.loading$ | async"></mat-spinner>
+</div>
 <div
   class="table"
-  *ngFor="let user of userList$ | async as userList"
+  *ngFor="
+    let user of userList$ | async | paginate : { itemsPerPage: 15, currentPage }
+  "
   [user]="user"
   [roleList]="roleList$"
   app-user-table-row
@@ -21,3 +25,6 @@
   (updateEvent)="update($event)"
   (deleteEvent)="deleteUser($event)"
 ></div>
+<div class="clearfix">
+  <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+</div>

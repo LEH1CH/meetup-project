@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { IMeetup } from '../../models/meetup';
 import { MeetupService } from '../../services/meetup.service';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-meetups-page',
@@ -9,8 +15,9 @@ import { Observable, map } from 'rxjs';
   styleUrl: './meetups-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MeetupsPageComponent {
-  public meetupList$!: Observable<IMeetup[]>;
+export class MeetupsPageComponent implements OnInit, OnDestroy {
+  public meetupList$!: Observable<IMeetup[] | any>;
+  private destroy: Subject<void> = new Subject();
   public searchFilter!: string;
   public criterionFilter!:
     | 'name'
@@ -19,20 +26,27 @@ export class MeetupsPageComponent {
     | 'time'
     | 'owner';
 
-  constructor(public meetupService: MeetupService) {}
+  constructor(
+    public meetupService: MeetupService,
+    public spinnerService: SpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.meetupList$ = this.meetupService.meetupList;
-    this.meetupService.getAll().subscribe((data: IMeetup[] | null) => {
-      if (!data) {
-        return;
-      }
-      this.meetupService.meetupList = data;
-    });
+    this.meetupService
+      .getAll()
+      .pipe(takeUntil(this.destroy))
+      .subscribe((data: IMeetup[] | null) => {
+        if (!data) {
+          return;
+        }
+        this.meetupService.meetupList = data;
+      });
   }
   subscribe(value: { idMeetup: number; idUser: number }) {
     this.meetupService
       .subscribe(value.idMeetup, value.idUser)
+      .pipe(takeUntil(this.destroy))
       .subscribe((data: IMeetup | null) => {
         if (!data) {
           return;
@@ -43,6 +57,7 @@ export class MeetupsPageComponent {
   unsubscribe(value: { idMeetup: number; idUser: number }) {
     this.meetupService
       .unsubscribe(value.idMeetup, value.idUser)
+      .pipe(takeUntil(this.destroy))
       .subscribe((data: IMeetup | null) => {
         if (!data) {
           return;
@@ -56,5 +71,10 @@ export class MeetupsPageComponent {
   }) {
     this.searchFilter = value.search;
     this.criterionFilter = value.criterion;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
   }
 }

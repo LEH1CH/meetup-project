@@ -3,7 +3,9 @@
     Создать новый митап
   </button>
 </div>
-
+<div class="clearfix">
+<mat-spinner *ngIf="spinnerService.loading$ | async"></mat-spinner>
+</div>
 <ul class="meetup_list" *ngIf="meetupService.meetupList | async as meetupList">
   <app-meetup
     (deleteEvent)="delete($event)"

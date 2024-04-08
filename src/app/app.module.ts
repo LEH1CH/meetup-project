@@ -25,12 +25,15 @@ import { authInterceptor } from './interceptors/auth.interceptor';
 import { FilterFormComponent } from './components/forms/filter-form/filter-form.component';
 import { FilterMeetupsPipe } from './pipes/filter-meetups.pipe';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { MeetupFormComponent } from './components/forms/meetup-form/meetup-form.component';
 import { UserTableRowComponent } from './components/user-table-row/user-table-row.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { RegisterFormComponent } from './components/forms/register-form/register-form.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { UserFilterMeetupsPipe } from './pipes/user-filter-meetups.pipe';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { spinnerInterceptor } from './interceptors/spinner.interceptor';
 import { MyMeetupsPageComponent } from './pages/my-meetups-page/my-meetups-page.component';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { UserFormComponent } from './components/forms/user-form/user-form.component';
@@ -68,6 +71,8 @@ import { DescriptionPageComponent } from './pages/description-page/description-p
     FormsModule,
     ReactiveFormsModule,
     MatExpansionModule,
+    NgxPaginationModule,
+    MatProgressSpinnerModule,
     MatIconModule,
     MatSelectModule,
     MatDatepickerModule,
@@ -77,6 +82,7 @@ import { DescriptionPageComponent } from './pages/description-page/description-p
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'ru_RU' },
+    { provide: HTTP_INTERCEPTORS, useClass: spinnerInterceptor, multi: true },
     provideMomentDateAdapter(),
     provideAnimationsAsync(),
   ],
