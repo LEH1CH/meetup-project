@@ -1,26 +1,22 @@
 import { IMeetup } from './../../models/meetup';
 import { AuthService } from './../../services/auth.service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import 'moment-timezone';
 import moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
 
 moment.locale('ru');
-// moment.tz.setDefault("Europe/Moscow");
 moment.tz.setDefault();
 
 @Component({
   selector: 'app-meetup',
   templateUrl: './meetup.component.html',
-  styleUrl: './meetup.component.scss'
+  styleUrl: './meetup.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetupComponent implements OnInit {
-
-  constructor(
-    private authService: AuthService,
-    public dialog: MatDialog
-  ) { }
+  constructor(private authService: AuthService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.checkDateMeetup();
@@ -37,30 +33,34 @@ export class MeetupComponent implements OnInit {
   isCanEdit: boolean = false;
 
   @Input() isUserPage: boolean = false;
-  @Input() meetup!: IMeetup
+  @Input() meetup!: IMeetup;
 
   @Output() subscribeEvent = new EventEmitter();
   @Output() unsubscribeEvent = new EventEmitter();
   @Output() deleteEvent = new EventEmitter();
 
   get isSubscribe() {
-    return this.meetup.users.find(item => item.id === this.authService.user?.id);
+    return this.meetup.users.find(
+      (item) => item.id === this.authService.user?.id
+    );
   }
 
   subscribe() {
     this.subscribeEvent.emit({
       idMeetup: this.meetup.id,
-      idUser: this.authService.user?.id
+      idUser: this.authService.user?.id,
     });
   }
   unsubscribe() {
     this.unsubscribeEvent.emit({
       idMeetup: this.meetup.id,
-      idUser: this.authService.user?.id
-    })
+      idUser: this.authService.user?.id,
+    });
   }
   delete(): void {
-    if (!confirm('Вы действительно хотите удалить митап?')) { return }
+    if (!confirm('Вы действительно хотите удалить митап?')) {
+      return;
+    }
     this.deleteEvent.emit(this.meetup.id);
   }
   getDate(time: string) {
@@ -70,7 +70,7 @@ export class MeetupComponent implements OnInit {
     const now = moment();
     const utcDate = moment.utc(this.meetup.time);
     if (utcDate.isAfter(now)) {
-      this.isOldMeetup = false
+      this.isOldMeetup = false;
     } else {
       this.isOldMeetup = true;
     }
@@ -78,7 +78,7 @@ export class MeetupComponent implements OnInit {
   openDialog(): void {
     this.dialog.open(ModalComponent, {
       data: { isCreate: false, meetup: this.meetup },
-      width: '800px'
+      width: '800px',
     });
   }
 }

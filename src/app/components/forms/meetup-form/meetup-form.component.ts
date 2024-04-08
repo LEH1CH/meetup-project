@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Inject,
@@ -21,6 +22,7 @@ import { IMeetup } from '../../../models/meetup';
   selector: 'app-meetup-form',
   templateUrl: './meetup-form.component.html',
   styleUrl: './meetup-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetupFormComponent implements OnInit {
   meetupForm!: FormGroup;

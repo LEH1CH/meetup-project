@@ -1,22 +1,43 @@
 <form class="filter_form" [formGroup]="filterForm">
-    <mat-form-field class="example-full-width" *ngIf="filterForm.value.criterion !== 'time'">
-        <input matInput placeholder="Поиск" formControlName="search" matInput class="filter__input">
-    </mat-form-field>
+  <mat-form-field
+    class="example-full-width"
+    *ngIf="filterForm.value.criterion !== 'time'"
+  >
+    <input
+      matInput
+      placeholder="Поиск"
+      formControlName="search"
+      matInput
+      class="filter__input"
+    />
+  </mat-form-field>
 
-    <mat-form-field class="example-full-width" *ngIf="filterForm.value.criterion === 'time'">
-        <input placeholder="Выберите дату" matInput formControlName="search" [matDatepicker]="dp" >
-        <mat-hint>{{getDateFormatString()}}</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
-        <mat-datepicker #dp></mat-datepicker>
-      </mat-form-field>
-    
-    <mat-form-field class="filter">
-        <mat-select placeholder="Критерии" formControlName="criterion" class="label">
-            <mat-option value="name">По названию</mat-option>
-            <mat-option value="description">По описанию</mat-option>
-            <mat-option value="location">По местоположению</mat-option>
-            <mat-option value="time">По дате</mat-option>
-            <mat-option value="owner">По автору</mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field
+    class="example-full-width"
+    *ngIf="filterForm.value.criterion === 'time'"
+  >
+    <input
+      placeholder="Выберите дату"
+      matInput
+      formControlName="search"
+      [matDatepicker]="dp"
+    />
+    <mat-hint>{{ getDateFormatString() }}</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker #dp></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="filter">
+    <mat-select
+      placeholder="Критерии"
+      formControlName="criterion"
+      class="label"
+    >
+      <mat-option value="name">По названию</mat-option>
+      <mat-option value="description">По описанию</mat-option>
+      <mat-option value="location">По местоположению</mat-option>
+      <mat-option value="time">По дате</mat-option>
+      <mat-option value="owner">По автору</mat-option>
+    </mat-select>
+  </mat-form-field>
 </form>

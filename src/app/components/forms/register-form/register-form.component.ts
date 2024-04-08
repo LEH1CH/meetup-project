@@ -1,10 +1,16 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss'],
+  styleUrl: './register-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterFormComponent {
   registerForm: FormGroup;

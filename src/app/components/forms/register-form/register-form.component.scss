@@ -1,48 +1,47 @@
 .register-container {
-    max-width: 400px;
-    margin: 100px auto 0;
-    padding: 20px;
-    border: 1px solid #303030;
-    border-radius: 5px;
-    background-color: #2C2C2C;
-    color: white;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-  }
-  
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .register__buttom {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    text-decoration: none;
-    
-  }
+  max-width: 400px;
+  margin: 100px auto 0;
+  padding: 20px;
+  border: 1px solid #303030;
+  border-radius: 5px;
+  background-color: #2c2c2c;
+  color: white;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.register__buttom {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}

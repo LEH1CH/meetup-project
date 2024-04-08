@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../models/user';
 import { Router } from '@angular/router';
@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.scss'],
+  styleUrl: './register-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterPageComponent {
   constructor(private authService: AuthService, private router: Router) {}
@@ -16,12 +17,11 @@ export class RegisterPageComponent {
       .registration(value.fio, value.email, value.password)
       .subscribe((user: IUser | null) => {
         if (user) {
-          // Регистрация прошла успешно
-          console.log('Registration successful:', user);
+          console.log('Регистрацмя успешна:', user);
           this.router.navigate(['login']);
+          this.authService.checkAdmin();
         } else {
-          // Произошла ошибка при регистрации
-          console.error('Registration failed');
+          console.error('Не получилось зарегистрировать пользователя');
         }
       });
   }

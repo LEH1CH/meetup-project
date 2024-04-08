@@ -12,7 +12,13 @@
 
         <div class="meetup__description">{{ meetup.description }}</div>
       </div>
-      <!-- <div class="meetup_user">{{ meetup.owner.fio }}</div> -->
+      <div class="meetup_user">
+        {{
+          meetup.owner && meetup.owner.fio
+            ? meetup.owner.fio
+            : "Неизвестный автор"
+        }}
+      </div>
     </div>
     <div>
       <div class="container__date">
@@ -59,7 +65,14 @@
     <div>Название: {{ meetup.name }}</div>
     <div>Описание: {{ meetup.description }}</div>
     <div>Участники: {{ meetup.users.length }}</div>
-    <!-- <div>Организатор: {{ meetup.owner.fio }}</div> -->
+    <div>
+      Организатор:
+      {{
+        meetup.owner && meetup.owner.fio
+          ? meetup.owner.fio
+          : "Неизвестный автор"
+      }}
+    </div>
     <div>Время: {{ meetup.time }}</div>
     <div>Место: {{ meetup.location }}</div>
   </div>

@@ -1,11 +1,11 @@
 <div class="button__container">
-<button (click)="openDialog()" class="btn btn-light">
-  Создать новый митап
-</button>
+  <button (click)="openDialog()" class="btn btn-light">
+    Создать новый митап
+  </button>
 </div>
 
 <ul class="meetup_list" *ngIf="meetupService.meetupList | async as meetupList">
-    <app-meetup
+  <app-meetup
     (deleteEvent)="delete($event)"
     *ngFor="let item of meetupList | userFilterMeetups"
     [meetup]="item"

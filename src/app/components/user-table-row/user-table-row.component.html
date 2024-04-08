@@ -5,7 +5,7 @@
   <div>
     <div *ngFor="let role of user.roles">{{ role.name }}</div>
   </div>
-  
+
   <div class="button__container-user">
     <button (click)="isEdit = !isEdit" class="btn btn-dark">
       Редактировать
@@ -15,6 +15,7 @@
 </div>
 
 <app-user-form
+  [isCreate]="false"
   *ngIf="isEdit"
   (updateEvent)="update($event)"
   (closeFormEvent)="closeForm()"

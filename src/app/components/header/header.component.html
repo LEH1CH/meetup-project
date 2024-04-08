@@ -4,6 +4,16 @@
       <nav class="nav">
         <img src="../../../assets/logo.svg" class="logo" />
         <ul class="nav_list">
+          <li class="nav_item">
+            <button
+              routerLink=""
+              routerLinkActive="active-link"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="btn btn-light"
+            >
+              О проекте
+            </button>
+          </li>
           <li *ngIf="authService.user" class="nav_item">
             <button
               routerLink="meetups"
@@ -24,7 +34,7 @@
               Мои митапы
             </button>
           </li>
-          <li *ngIf="authService.user" class="nav_item">
+          <li *ngIf="authService.user && authService.isAdmin" class="nav_item">
             <button
               routerLink="users"
               routerLinkActive="active-link"

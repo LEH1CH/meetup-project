@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MeetupsPageComponent } from './pages/meetups-page/meetups-page.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -32,11 +30,11 @@ import { UserTableRowComponent } from './components/user-table-row/user-table-ro
 import { ModalComponent } from './components/modal/modal.component';
 import { RegisterFormComponent } from './components/forms/register-form/register-form.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
-
 import { UserFilterMeetupsPipe } from './pipes/user-filter-meetups.pipe';
 import { MyMeetupsPageComponent } from './pages/my-meetups-page/my-meetups-page.component';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { UserFormComponent } from './components/forms/user-form/user-form.component';
+import { DescriptionPageComponent } from './pages/description-page/description-page.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +55,7 @@ import { UserFormComponent } from './components/forms/user-form/user-form.compon
     UserFilterMeetupsPipe,
     UserTableRowComponent,
     UserFormComponent,
+    DescriptionPageComponent,
   ],
   imports: [
     BrowserModule,
