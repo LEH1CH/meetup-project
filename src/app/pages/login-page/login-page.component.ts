@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { IUser } from '../../models/user';
+import { modelUser } from '../../models/user';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -18,7 +18,7 @@ export class LoginPageComponent implements OnDestroy {
     this.authService
       .login(value.email, value.password)
       .pipe(takeUntil(this.destroy))
-      .subscribe((user: IUser | null) => {
+      .subscribe((user: modelUser | null) => {
         if (!user) {
           return;
         }

@@ -1,4 +1,4 @@
-export interface IMeetup {
+export interface modelMeetup {
   id: number;
   name: string;
   description: string;

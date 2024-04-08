@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IRole } from '../../models/role';
-import { IUser } from '../../models/user';
+import { modelRole } from '../../models/role';
+import { modelUser } from '../../models/user';
 
 @Component({
   selector: '[app-user-table-row]',
@@ -10,8 +10,8 @@ import { IUser } from '../../models/user';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserTableRowComponent {
-  @Input() roleList!: Observable<IRole[]>;
-  @Input() user!: IUser;
+  @Input() roleList!: Observable<modelRole[]>;
+  @Input() user!: modelUser;
   @Input() isCreate!: boolean;
 
   isEdit = false;
@@ -19,7 +19,7 @@ export class UserTableRowComponent {
   @Output() updateEvent = new EventEmitter();
   @Output() deleteEvent = new EventEmitter();
 
-  update(value: IUser) {
+  update(value: modelUser) {
     this.updateEvent.emit(value);
   }
   delete() {

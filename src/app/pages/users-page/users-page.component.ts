@@ -5,8 +5,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { IRole } from '../../models/role';
-import { IUser } from '../../models/user';
+import { modelRole } from '../../models/role';
+import { modelUser } from '../../models/user';
 import { RoleService } from '../../services/role.service';
 import { UserService } from '../../services/user.service';
 import { SpinnerService } from '../../services/spinner.service';
@@ -20,8 +20,8 @@ import { SpinnerService } from '../../services/spinner.service';
 export class UsersPageComponent implements OnInit, OnDestroy {
   tableTitles: string[] = ['Имя', 'Почта', 'Пароль', 'Роли', 'Действия'];
   public isEdit: boolean = false;
-  public userList$!: Observable<IUser[] | any>;
-  public roleList$!: Observable<IRole[]>;
+  public userList$!: Observable<modelUser[] | any>;
+  public roleList$!: Observable<modelRole[]>;
   private destroy: Subject<void> = new Subject();
   currentPage = 1;
   constructor(
@@ -40,7 +40,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.userService
       .getAll()
       .pipe(takeUntil(this.destroy))
-      .subscribe((data: IUser[] | null) => {
+      .subscribe((data: modelUser[] | null) => {
         if (!data) {
           return;
         }
@@ -53,7 +53,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.roleService
       .getAll()
       .pipe(takeUntil(this.destroy))
-      .subscribe((data: IRole[] | null) => {
+      .subscribe((data: modelRole[] | null) => {
         if (!data) {
           return;
         }
@@ -83,7 +83,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.userService
       .create(value.fio, value.email, value.password)
       .pipe(takeUntil(this.destroy))
-      .subscribe((user: IUser | null) => {
+      .subscribe((user: modelUser | null) => {
         if (!user) {
           return;
         }
@@ -95,7 +95,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.userService
       .addRole(name, userId)
       .pipe(takeUntil(this.destroy))
-      .subscribe((data: IRole | null) => {
+      .subscribe((data: modelRole | null) => {
         if (!data) {
           return;
         }
@@ -107,7 +107,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.userService
       .delete(id)
       .pipe(takeUntil(this.destroy))
-      .subscribe((data: IUser | null) => {
+      .subscribe((data: modelUser | null) => {
         if (!data) {
           return;
         }

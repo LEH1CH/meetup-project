@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
-import { IRole } from '../models/role';
+import { modelRole } from '../models/role';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -10,20 +10,20 @@ import { HttpClient } from '@angular/common/http';
 export class RoleService {
   baseURL: string = `${environment.backendOrigin}/role`;
 
-  private dataSubject = new BehaviorSubject<IRole[]>([]);
-  private _roleList$: Observable<IRole[]> = this.dataSubject.asObservable();
+  private dataSubject = new BehaviorSubject<modelRole[]>([]);
+  private _roleList$: Observable<modelRole[]> = this.dataSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  set roleList(value: IRole[]) {
+  set roleList(value: modelRole[]) {
     this.dataSubject.next(value);
   }
-  get roleList(): Observable<IRole[]> {
+  get roleList(): Observable<modelRole[]> {
     return this._roleList$;
   }
 
-  getAll(): Observable<IRole[] | null> {
-    return this.http.get<IRole[]>(`${this.baseURL}`).pipe(
+  getAll(): Observable<modelRole[] | null> {
+    return this.http.get<modelRole[]>(`${this.baseURL}`).pipe(
       catchError((err): Observable<null> => {
         alert(err.error.message);
         return of(null);

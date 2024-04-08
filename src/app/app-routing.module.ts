@@ -20,19 +20,19 @@ const routes: Routes = [
   {
     path: 'meetups',
     component: MeetupsPageComponent,
-    title: 'All Meetups',
+    title: 'Все митапы',
     canActivate: [AuthGuard],
   },
   {
     path: 'userMeetups',
     component: MyMeetupsPageComponent,
-    title: 'My Meetups',
+    title: 'Мои митапы',
     canActivate: [AuthGuard],
   },
   {
     path: 'users',
     component: UsersPageComponent,
-    title: 'Users',
+    title: 'Пользователи',
     canActivate: [AuthGuard, AdminGuard],
   },
   { path: '**', component: DescriptionPageComponent, redirectTo: '' },

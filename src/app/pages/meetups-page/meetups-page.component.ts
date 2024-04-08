@@ -4,9 +4,9 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { IMeetup } from '../../models/meetup';
+import { modelMeetup } from '../../models/meetup';
 import { MeetupService } from '../../services/meetup.service';
-import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { SpinnerService } from '../../services/spinner.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetupsPageComponent implements OnInit, OnDestroy {
-  public meetupList$!: Observable<IMeetup[] | any>;
+  public meetupList$!: Observable<modelMeetup[] | any>;
   private destroy: Subject<void> = new Subject();
   public searchFilter!: string;
   public criterionFilter!:
@@ -36,7 +36,7 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
     this.meetupService
       .getAll()
       .pipe(takeUntil(this.destroy))
-      .subscribe((data: IMeetup[] | null) => {
+      .subscribe((data: modelMeetup[] | null) => {
         if (!data) {
           return;
         }
@@ -47,7 +47,7 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
     this.meetupService
       .subscribe(value.idMeetup, value.idUser)
       .pipe(takeUntil(this.destroy))
-      .subscribe((data: IMeetup | null) => {
+      .subscribe((data: modelMeetup | null) => {
         if (!data) {
           return;
         }
@@ -58,7 +58,7 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
     this.meetupService
       .unsubscribe(value.idMeetup, value.idUser)
       .pipe(takeUntil(this.destroy))
-      .subscribe((data: IMeetup | null) => {
+      .subscribe((data: modelMeetup | null) => {
         if (!data) {
           return;
         }

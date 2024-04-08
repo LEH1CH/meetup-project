@@ -16,7 +16,7 @@ import {
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import moment from 'moment';
 import 'moment/locale/ru';
-import { IMeetup } from '../../../models/meetup';
+import { modelMeetup } from '../../../models/meetup';
 
 @Component({
   selector: 'app-meetup-form',
@@ -29,7 +29,7 @@ export class MeetupFormComponent implements OnInit {
   today = new Date();
 
   @Output() meetupEvent = new EventEmitter();
-  @Input() meetup!: IMeetup | undefined;
+  @Input() meetup!: modelMeetup | undefined;
 
   constructor(
     @Inject(MAT_DATE_LOCALE) private _locale: string,

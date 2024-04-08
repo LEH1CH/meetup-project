@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IMeetup } from '../models/meetup';
+import { modelMeetup } from '../models/meetup';
 import moment from 'moment';
 import { MeetupService } from '../services/meetup.service';
 
@@ -10,11 +10,11 @@ export class FilterMeetupsPipe implements PipeTransform {
   constructor(private meetupService: MeetupService) {}
 
   transform(
-    meetups: IMeetup[],
+    meetups: modelMeetup[],
     search: string,
     criterion: 'name' | 'description' | 'location' | 'time' | 'owner'
-  ): IMeetup[] | null | any {
-    let meetupList: IMeetup[] = meetups;
+  ): modelMeetup[] | null | any {
+    let meetupList: modelMeetup[] = meetups;
 
     if (!meetupList) {
       return null;

@@ -1,14 +1,19 @@
-import { HttpContextToken, HttpEvent, HttpHandler, HttpInterceptor, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SpinnerService } from '../services/spinner.service';
-import { Observable, finalize, tap } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 
 @Injectable()
 export class spinnerInterceptor implements HttpInterceptor {
   totalRequests = 0;
   completedRequests = 0;
 
-  constructor(private spinnerService: SpinnerService) { }
+  constructor(private spinnerService: SpinnerService) {}
 
   intercept(
     request: HttpRequest<unknown>,

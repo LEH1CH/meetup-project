@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { IUser } from '../../models/user';
+import { modelUser } from '../../models/user';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -18,7 +18,7 @@ export class RegisterPageComponent implements OnDestroy {
     this.authService
       .registration(value.fio, value.email, value.password)
       .pipe(takeUntil(this.destroy))
-      .subscribe((user: IUser | null) => {
+      .subscribe((user: modelUser | null) => {
         if (user) {
           console.log('Регистрацмя успешна:', user);
           this.router.navigate(['login']);

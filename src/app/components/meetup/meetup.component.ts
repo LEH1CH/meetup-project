@@ -1,4 +1,4 @@
-import { IMeetup } from './../../models/meetup';
+import { modelMeetup } from './../../models/meetup';
 import { AuthService } from './../../services/auth.service';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import 'moment-timezone';
@@ -33,7 +33,7 @@ export class MeetupComponent implements OnInit {
   isCanEdit: boolean = false;
 
   @Input() isUserPage: boolean = false;
-  @Input() meetup!: IMeetup;
+  @Input() meetup!: modelMeetup;
 
   @Output() subscribeEvent = new EventEmitter();
   @Output() unsubscribeEvent = new EventEmitter();

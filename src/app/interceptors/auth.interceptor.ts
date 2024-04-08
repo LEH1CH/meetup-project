@@ -9,13 +9,14 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment';
 
-
 @Injectable()
 export class authInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   intercept(
-    request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     const token: string | null = this.authService.token;
     const isApiUrl = request.url.startsWith(environment.backendOrigin);
     if (token && isApiUrl) {

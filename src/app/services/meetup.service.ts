@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { IMeetup } from '../models/meetup';
+import { modelMeetup } from '../models/meetup';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 
@@ -10,38 +10,38 @@ import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 export class MeetupService {
   baseURL: string = `${environment.backendOrigin}/meetup`;
 
-  private dataSubject = new BehaviorSubject<IMeetup[]>([]);
-  private _meetupList$: Observable<IMeetup[]> = this.dataSubject.asObservable();
+  private dataSubject = new BehaviorSubject<modelMeetup[]>([]);
+  private _meetupList$: Observable<modelMeetup[]> = this.dataSubject.asObservable();
   public currentPage = 1;
 
   constructor(private http: HttpClient) {}
 
-  get meetupList(): Observable<IMeetup[]> {
+  get meetupList(): Observable<modelMeetup[]> {
     return this._meetupList$;
   }
-  set createMeetup(value: IMeetup) {
+  set createMeetup(value: modelMeetup) {
     this.dataSubject.next([...this.dataSubject.value, value]);
   }
-  set updateMeetup(value: IMeetup) {
+  set updateMeetup(value: modelMeetup) {
     this.dataSubject.next([
       ...this.dataSubject.value.map((meetup) =>
         meetup.id === value.id ? value : meetup
       ),
     ]);
   }
-  set removeMeetup(value: IMeetup) {
+  set removeMeetup(value: modelMeetup) {
     this.dataSubject.next([
       ...this.dataSubject.value.filter((meetup) => meetup.id !== value.id),
     ]);
   }
-  set meetupList(value: IMeetup[]) {
+  set meetupList(value: modelMeetup[]) {
     this.dataSubject.next(value);
   }
 
-  getAll(): Observable<IMeetup[] | null> {
-    return this.http.get<IMeetup[]>(`${this.baseURL}`).pipe(
+  getAll(): Observable<modelMeetup[] | null> {
+    return this.http.get<modelMeetup[]>(`${this.baseURL}`).pipe(
       map((data) => {
-        return data.sort((a: IMeetup, b: IMeetup) =>
+        return data.sort((a: modelMeetup, b: modelMeetup) =>
           new Date(b.time) > new Date(a.time) ? 1 : -1
         );
       }),
@@ -52,8 +52,8 @@ export class MeetupService {
     );
   }
 
-  subscribe(idMeetup: number, idUser: number): Observable<IMeetup | null> {
-    return this.http.put<IMeetup>(`${this.baseURL}`, { idMeetup, idUser }).pipe(
+  subscribe(idMeetup: number, idUser: number): Observable<modelMeetup | null> {
+    return this.http.put<modelMeetup>(`${this.baseURL}`, { idMeetup, idUser }).pipe(
       catchError((err): Observable<null> => {
         alert(err.error.message);
         return of(null);
@@ -61,9 +61,9 @@ export class MeetupService {
     );
   }
 
-  unsubscribe(idMeetup: number, idUser: number): Observable<IMeetup | null> {
+  unsubscribe(idMeetup: number, idUser: number): Observable<modelMeetup | null> {
     return this.http
-      .delete<IMeetup>(`${this.baseURL}`, { body: { idMeetup, idUser } })
+      .delete<modelMeetup>(`${this.baseURL}`, { body: { idMeetup, idUser } })
       .pipe(
         catchError((err): Observable<null> => {
           alert(err.error.message);
@@ -71,9 +71,9 @@ export class MeetupService {
         })
       );
   }
-  create(form: IMeetup): Observable<IMeetup | null> {
+  create(form: modelMeetup): Observable<modelMeetup | null> {
     return this.http
-      .post<IMeetup>(`${this.baseURL}`, {
+      .post<modelMeetup>(`${this.baseURL}`, {
         name: form.name,
         description: form.description,
         time: form.time,
@@ -95,9 +95,9 @@ export class MeetupService {
         })
       );
   }
-  edit(form: IMeetup, meetup: IMeetup): Observable<IMeetup | null> {
+  edit(form: modelMeetup, meetup: modelMeetup): Observable<modelMeetup | null> {
     return this.http
-      .put<IMeetup>(`${this.baseURL}/${meetup?.id}`, {
+      .put<modelMeetup>(`${this.baseURL}/${meetup?.id}`, {
         name: form.name,
         description: form.description,
         time: form.time,
@@ -119,8 +119,8 @@ export class MeetupService {
         })
       );
   }
-  delete(id: number): Observable<IMeetup | null> {
-    return this.http.delete<IMeetup>(`${this.baseURL}/${id}`).pipe(
+  delete(id: number): Observable<modelMeetup | null> {
+    return this.http.delete<modelMeetup>(`${this.baseURL}/${id}`).pipe(
       catchError((err): Observable<null> => {
         alert(err.error.message);
         return of(null);

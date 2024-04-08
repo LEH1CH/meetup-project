@@ -1,4 +1,4 @@
-export interface IRole {
+export interface modelRole {
   userId: number;
   name: string;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { IUser } from '../models/user';
+import { modelUser } from '../models/user';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -18,7 +18,7 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  public get user(): IUser | null {
+  public get user(): modelUser | null {
     const token = localStorage.getItem('token');
     if (!token) {
       return null;
@@ -34,7 +34,7 @@ export class AuthService {
     }
   }
 
-  login(email: string, password: string): Observable<IUser | null> {
+  login(email: string, password: string): Observable<modelUser | null> {
     return this.http
       .post<{ token: string }>(`${this.baseURL}/login`, { email, password })
       .pipe(
@@ -52,7 +52,7 @@ export class AuthService {
     fio: string,
     email: string,
     password: string
-  ): Observable<IUser | null> {
+  ): Observable<modelUser | null> {
     return this.http
       .post<{ token: string }>(`${this.baseURL}/registration`, {
         fio,

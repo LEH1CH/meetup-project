@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { IMeetup } from '../../models/meetup';
+import { modelMeetup } from '../../models/meetup';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -19,7 +19,7 @@ import { SpinnerService } from '../../services/spinner.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyMeetupsPageComponent implements OnInit, OnDestroy {
-  public meetupList$!: Observable<IMeetup[]>;
+  public meetupList$!: Observable<modelMeetup[]>;
   private destroy: Subject<void> = new Subject();
 
   constructor(
@@ -34,7 +34,7 @@ export class MyMeetupsPageComponent implements OnInit, OnDestroy {
     this.meetupService
       .getAll()
       .pipe(takeUntil(this.destroy))
-      .subscribe((data: IMeetup[] | null) => {
+      .subscribe((data: modelMeetup[] | null) => {
         if (!data) {
           return;
         }
@@ -55,7 +55,7 @@ export class MyMeetupsPageComponent implements OnInit, OnDestroy {
     this.meetupService
       .delete(id)
       .pipe(takeUntil(this.destroy))
-      .subscribe((data: IMeetup | null) => {
+      .subscribe((data: modelMeetup | null) => {
         if (!data) {
           return;
         }

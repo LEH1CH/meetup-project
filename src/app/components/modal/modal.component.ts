@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IMeetup } from '../../models/meetup';
+import { modelMeetup } from '../../models/meetup';
 import { FormGroup } from '@angular/forms';
 import { MeetupService } from '../../services/meetup.service';
 
@@ -15,7 +15,7 @@ export class ModalComponent {
     private meetupService: MeetupService,
     public dialogRef: MatDialogRef<ModalComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { isCreate: boolean; meetup?: IMeetup }
+    public data: { isCreate: boolean; meetup?: modelMeetup }
   ) {}
 
   onNoClick(): void {
@@ -23,7 +23,7 @@ export class ModalComponent {
   }
 
   getAll() {
-    this.meetupService.getAll().subscribe((data: IMeetup[] | null) => {
+    this.meetupService.getAll().subscribe((data: modelMeetup[] | null) => {
       if (!data) {
         return;
       }
@@ -35,7 +35,7 @@ export class ModalComponent {
     if (this.data.isCreate) {
       this.meetupService
         .create(form.value)
-        .subscribe((data: IMeetup | null) => {
+        .subscribe((data: modelMeetup | null) => {
           if (!data) {
             return;
           }
@@ -46,7 +46,7 @@ export class ModalComponent {
     } else {
       this.meetupService
         .edit(form.value, this.data.meetup!)
-        .subscribe((data: IMeetup | null) => {
+        .subscribe((data: modelMeetup | null) => {
           if (!data) {
             return;
           }

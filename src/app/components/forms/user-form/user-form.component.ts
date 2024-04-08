@@ -12,8 +12,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { IRole } from '../../../models/role';
-import { IUser } from '../../../models/user';
+import { modelRole } from '../../../models/role';
+import { modelUser } from '../../../models/user';
 
 @Component({
   selector: 'app-user-form',
@@ -41,8 +41,8 @@ export class UserFormComponent {
     });
   }
 
-  @Input() roleList!: Observable<IRole[]>;
-  @Input() user!: IUser;
+  @Input() roleList!: Observable<modelRole[]>;
+  @Input() user!: modelUser;
   @Output() createUserEvent = new EventEmitter();
   @Output() updateEvent = new EventEmitter();
   @Output() closeFormEvent = new EventEmitter();

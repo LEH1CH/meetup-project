@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable, catchError, of, map } from 'rxjs';
-import { IUser } from '../models/user';
+import { modelUser } from '../models/user';
 import { HttpClient } from '@angular/common/http';
-import { IRole } from '../models/role';
+import { modelRole } from '../models/role';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -13,20 +13,20 @@ export class UserService {
   baseURL: string = `${environment.backendOrigin}/user`;
   baseAuthURL: string = `${environment.backendOrigin}/auth`;
 
-  private dataSubject = new BehaviorSubject<IUser[]>([]);
-  private _userList$: Observable<IUser[]> = this.dataSubject.asObservable();
+  private dataSubject = new BehaviorSubject<modelUser[]>([]);
+  private _userList$: Observable<modelUser[]> = this.dataSubject.asObservable();
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  set userList(value: IUser[]) {
+  set userList(value: modelUser[]) {
     this.dataSubject.next(value);
   }
-  get userList(): Observable<IUser[]> {
+  get userList(): Observable<modelUser[]> {
     return this._userList$;
   }
 
-  getAll(): Observable<IUser[] | null> {
-    return this.http.get<IUser[]>(`${this.baseURL}`).pipe(
+  getAll(): Observable<modelUser[] | null> {
+    return this.http.get<modelUser[]>(`${this.baseURL}`).pipe(
       catchError((err): Observable<null> => {
         alert(err.error.message);
         return of(null);
@@ -38,7 +38,7 @@ export class UserService {
     fio: string,
     email: string,
     password: string
-  ): Observable<IUser | null> {
+  ): Observable<modelUser | null> {
     return this.http
       .post<{ token: string }>(`${this.baseAuthURL}/registration`, {
         fio,
@@ -61,9 +61,9 @@ export class UserService {
     email: string,
     fio: string,
     password: string
-  ): Observable<IUser | null> {
+  ): Observable<modelUser | null> {
     return this.http
-      .put<IUser>(`${this.baseURL}/${id}`, { email, password, fio })
+      .put<modelUser>(`${this.baseURL}/${id}`, { email, password, fio })
       .pipe(
         catchError((err): Observable<null> => {
           alert(err.error.message);
@@ -71,20 +71,20 @@ export class UserService {
         })
       );
   }
-  delete(id: number): Observable<IUser | null> {
+  delete(id: number): Observable<modelUser | null> {
     if (id === this.authService.user?.id) {
       alert('Данного пользователя удалить невозможно');
       return of(null);
     }
-    return this.http.delete<IUser>(`${this.baseURL}/${id}`).pipe(
+    return this.http.delete<modelUser>(`${this.baseURL}/${id}`).pipe(
       catchError((err): Observable<null> => {
         alert(err.error.message);
         return of(null);
       })
     );
   }
-  addRole(name: string, userId: number): Observable<IRole | null> {
-    return this.http.put<IRole>(`${this.baseURL}/role`, { name, userId }).pipe(
+  addRole(name: string, userId: number): Observable<modelRole | null> {
+    return this.http.put<modelRole>(`${this.baseURL}/role`, { name, userId }).pipe(
       catchError((err): Observable<null> => {
         alert(err.error.message);
         return of(null);

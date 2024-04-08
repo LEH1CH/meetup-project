@@ -1,12 +1,12 @@
-export interface IUser {
+export interface modelUser {
   email: string;
   id: number;
   password?: string;
   fio?: string;
-  roles?: Array<IRoles>;
+  roles?: Array<modelRoles>;
 }
 
-export interface IRoles {
+export interface modelRoles {
   id: number;
   name: 'USER' | 'ADMIN';
   UserRole: {
