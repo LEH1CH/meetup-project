@@ -1,16 +1,9 @@
 <form class="form" [formGroup]="meetupForm" (ngSubmit)="onSubmit()">
-  <div class="form_control">
-    <mat-form-field appearance="outline">
-      <mat-label>Название</mat-label>
-      <input
-        class="input"
-        formControlName="name"
-        type="text"
-        matInput
-        required="true"
-      />
-    </mat-form-field>
-  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Название</mat-label>
+    <input formControlName="name" type="text" matInput required="true" />
+  </mat-form-field>
+
   <div
     class="error"
     *ngIf="
@@ -25,135 +18,87 @@
     </div>
   </div>
 
-  <div class="form_control">
-    <mat-form-field appearance="outline">
-      <mat-label>Описание</mat-label>
-      <input
-        class="input"
-        formControlName="description"
-        type="text"
-        matInput
-        required="true"
-      />
-    </mat-form-field>
-  </div>
-  <div class="form_control">
-    <mat-form-field class="input" appearance="outline">
-      <mat-label>Дата проведения</mat-label>
-      <input
-        [min]="today"
-        matInput
-        formControlName="time"
-        [matDatepicker]="dp"
-      />
-      <mat-hint>ДД.ММ.ГГГГ</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
-      <mat-datepicker #dp></mat-datepicker>
-    </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Описание</mat-label>
+    <input formControlName="description" type="text" matInput required="true" />
+  </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Время</mat-label>
-      <input
-        class="input"
-        formControlName="timeHours"
-        type="text"
-        matInput
-        required="true"
-      />
-      <mat-hint>HH:MM</mat-hint>
-    </mat-form-field>
-    <div
-      class="error"
-      *ngIf="
-        meetupForm.controls['timeHours'].invalid &&
-        meetupForm.controls['timeHours'].touched
-      "
-    >
-      <div *ngIf="meetupForm.controls['timeHours'].hasError('required')">
-        Необходимо заполнить поле
-      </div>
-      <div *ngIf="meetupForm.controls['timeHours'].hasError('pattern')">
-        Необходимо ввести время в формате HH:MM
-      </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Дата проведения</mat-label>
+    <input [min]="today" matInput formControlName="time" [matDatepicker]="dp" />
+    <mat-hint>ДД.ММ.ГГГГ</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+    <mat-datepicker #dp></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Время</mat-label>
+    <input formControlName="timeHours" type="text" matInput required="true" />
+    <mat-hint>HH:MM</mat-hint>
+  </mat-form-field>
+  <div
+    class="error"
+    *ngIf="
+      meetupForm.controls['timeHours'].invalid &&
+      meetupForm.controls['timeHours'].touched
+    "
+  >
+    <div *ngIf="meetupForm.controls['timeHours'].hasError('required')">
+      Необходимо заполнить поле
     </div>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Продолжительность митапа (в мин.)</mat-label>
-      <input
-        class="input"
-        formControlName="duration"
-        type="number"
-        matInput
-        required="true"
-      />
-    </mat-form-field>
+    <div *ngIf="meetupForm.controls['timeHours'].hasError('pattern')">
+      Необходимо ввести время в формате HH:MM
+    </div>
   </div>
 
-  <div class="form_control">
-    <mat-form-field appearance="outline">
-      <mat-label>Местоположение</mat-label>
-      <input
-        class="input"
-        formControlName="location"
-        type="text"
-        matInput
-        required="true"
-      />
-    </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Продолжительность митапа (в мин.)</mat-label>
+    <input formControlName="duration" type="number" matInput required="true" />
+  </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Целевая аудитория</mat-label>
-      <input
-        class="input"
-        formControlName="target_audience"
-        type="text"
-        matInput
-        required="true"
-      />
-    </mat-form-field>
-  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Местоположение</mat-label>
+    <input formControlName="location" type="text" matInput required="true" />
+  </mat-form-field>
 
-  <div class="form_control">
-    <mat-form-field appearance="outline">
-      <mat-label>Перечень знаний необходимых для посещения митапа?</mat-label>
-      <input
-        class="input"
-        formControlName="need_to_know"
-        type="text"
-        matInput
-        required="true"
-      />
-    </mat-form-field>
-  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Целевая аудитория</mat-label>
+    <input
+      formControlName="target_audience"
+      type="text"
+      matInput
+      required="true"
+    />
+  </mat-form-field>
 
-  <div class="form_control">
-    <mat-form-field appearance="outline">
-      <mat-label>Что будет на митапе?</mat-label>
-      <input
-        class="input"
-        formControlName="will_happen"
-        type="text"
-        matInput
-        required="true"
-      />
-    </mat-form-field>
-  </div>
-  <div class="form_control">
-    <mat-form-field appearance="outline">
-      <mat-label>Причина почему митап нужно обязательно посетить?</mat-label>
-      <input
-        class="input"
-        formControlName="reason_to_come"
-        type="text"
-        matInput
-        required="true"
-      />
-    </mat-form-field>
-  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Перечень знаний необходимых для посещения митапа?</mat-label>
+    <input
+      formControlName="need_to_know"
+      type="text"
+      matInput
+      required="true"
+    />
+  </mat-form-field>
 
-  <div class="form_control">
+  <mat-form-field appearance="outline">
+    <mat-label>Что будет на митапе?</mat-label>
+    <input formControlName="will_happen" type="text" matInput required="true" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Причина почему митап нужно обязательно посетить?</mat-label>
+    <input
+      formControlName="reason_to_come"
+      type="text"
+      matInput
+      required="true"
+    />
+  </mat-form-field>
+
+  <div class="btn">
     <button [disabled]="meetupForm.invalid" type="submit" class="btn btn-dark">
-      Принять
+      Сохранить
     </button>
   </div>
 </form>

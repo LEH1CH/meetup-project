@@ -1,8 +1,8 @@
 <div *ngIf="!isEdit" class="row">
-  <div>{{ user.fio }}</div>
-  <div>{{ user.email }}</div>
-  <div>***********</div>
-  <div>
+  <div class="cell">{{ user.fio }}</div>
+  <div class="cell">{{ user.email }}</div>
+  <div class="cell">***********</div>
+  <div class="cell">
     <div *ngFor="let role of user.roles">{{ role.name }}</div>
   </div>
 

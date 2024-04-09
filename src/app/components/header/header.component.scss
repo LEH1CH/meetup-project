@@ -1,6 +1,8 @@
 .header {
   width: 100%;
   text-decoration: none;
+  position: relative;
+  z-index: 90;
 }
 
 .logo {

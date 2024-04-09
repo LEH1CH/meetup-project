@@ -6,6 +6,7 @@ import {
   Input,
   OnInit,
   Output,
+  inject,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -25,24 +26,21 @@ import { modelMeetup } from '../../../models/meetup';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetupFormComponent implements OnInit {
-  meetupForm!: FormGroup;
-  today = new Date();
+  private formBuilder: FormBuilder = inject(FormBuilder);
+  public meetupForm!: FormGroup;
+  public today = new Date();
 
   @Output() meetupEvent = new EventEmitter();
   @Input() meetup!: modelMeetup | undefined;
 
-  constructor(
-    @Inject(MAT_DATE_LOCALE) private _locale: string,
-    private fb: FormBuilder
-  ) {}
+  constructor(@Inject(MAT_DATE_LOCALE) private _locale: string) {}
 
   ngOnInit(): void {
     this.initForm();
   }
   initForm() {
     let timeHoursMeetup = this.getTime();
-
-    this.meetupForm = new FormGroup({
+    this.meetupForm = this.formBuilder.group({
       name: new FormControl<string>(this.meetup?.name || '', [
         Validators.required,
         Validators.minLength(3),
@@ -80,19 +78,15 @@ export class MeetupFormComponent implements OnInit {
       ),
     });
   }
-
   onSubmit() {
     if (this.meetupForm.invalid) {
       return;
     }
-
     const timeArr = this.meetupForm.value.timeHours.split(':');
     this.meetupForm.value.time = moment(this.meetupForm.value.time);
     this.meetupForm.value.time.hour(timeArr[0]).minute(timeArr[1]);
-
     this.meetupEvent.emit(this.meetupForm);
   }
-
   getTime(): string | null {
     if (!this.meetup) {
       return null;

@@ -18,7 +18,7 @@ import { SpinnerService } from '../../services/spinner.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersPageComponent implements OnInit, OnDestroy {
-  tableTitles: string[] = ['Имя', 'Почта', 'Пароль', 'Роли', 'Действия'];
+  public tableTitles: string[] = ['Имя', 'Почта', 'Пароль', 'Роли', 'Действия'];
   public isEdit: boolean = false;
   public userList$!: Observable<modelUser[] | any>;
   public roleList$!: Observable<modelRole[]>;

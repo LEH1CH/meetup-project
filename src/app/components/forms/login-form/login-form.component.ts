@@ -3,8 +3,9 @@ import {
   Component,
   EventEmitter,
   Output,
+  inject,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-form',
@@ -13,12 +14,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
-  loginForm: FormGroup;
+  private formBuilder: FormBuilder = inject(FormBuilder);
+  public loginForm!: FormGroup;
 
   @Output() loginEvent = new EventEmitter();
 
   constructor() {
-    this.loginForm = new FormGroup({
+    this.iniForm();
+  }
+
+  iniForm() {
+    this.loginForm = this.formBuilder.group({
       email: new FormControl<string>('', [
         Validators.required,
         Validators.email,
